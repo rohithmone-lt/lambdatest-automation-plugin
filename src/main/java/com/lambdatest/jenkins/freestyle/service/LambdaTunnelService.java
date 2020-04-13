@@ -23,6 +23,7 @@ import com.lambdatest.jenkins.freestyle.api.Constant;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
 import com.lambdatest.jenkins.freestyle.data.LocalTunnel;
 import com.lambdatest.jenkins.freestyle.exception.TunnelHashNotFoundException;
+import com.lambdatest.jenkins.freestyle.util.PortAvailabilityUtils;
 
 import hudson.FilePath;
 
@@ -234,6 +235,7 @@ public class LambdaTunnelService {
 	public static Process runCommandLine(String filePath, String tunnelLogPath, String user, String key,
 			String tunnelName, LocalTunnel localTunnel) throws IOException {
 		try {
+			int availablePort= PortAvailabilityUtils.randomFreePort();
 			//Updating permissions
 			Runtime.getRuntime().exec("chmod 777 " + filePath);
 			
@@ -245,6 +247,9 @@ public class LambdaTunnelService {
 	        if(localTunnel!=null && localTunnel.isSharedTunnel()) {
 	        	list.add("-shared-tunnel");
 			}
+	        if(availablePort > 0) {
+	        	 list.add("-port");list.add(availablePort+"");
+	        }
 			if(localTunnel!=null && !localTunnel.getTunnelExtCommand().isEmpty()) {
 				String[] extCommands=localTunnel.getTunnelExtCommand().split(" ");
 				list.addAll(Arrays.asList(extCommands));
