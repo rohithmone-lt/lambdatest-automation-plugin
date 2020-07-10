@@ -28,6 +28,7 @@ import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
 import com.lambdatest.jenkins.freestyle.data.LocalTunnel;
 import com.lambdatest.jenkins.freestyle.service.LambdaTunnelService;
 import com.lambdatest.jenkins.freestyle.service.LambdaWebSocketTunnelService;
+import com.lambdatest.jenkins.freestyle.service.OSValidator;
 
 import hudson.FilePath;
 import hudson.Launcher;
@@ -249,7 +250,10 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 					x=stopTunnel();
 				}
 			} catch (Exception e) {
-				logger.warning(e.getMessage());
+				logger.warning("Forcefully Tear Down due to :"+e.getMessage());
+				if (tunnelProcess != null && tunnelProcess.isAlive()) {
+					tunnelProcess.destroy();
+				}
 			}
 			return super.tearDown(build, listener);
 		}
@@ -257,6 +261,11 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		private int stopTunnel() throws IOException, InterruptedException {
 			if (tunnelProcess != null && tunnelProcess.isAlive()) {
 				logger.info("tunnel is active, going to stop tunnel binary");
+				if (OSValidator.isWindows()) {
+					tunnelProcess.destroy();
+					logger.info("Windows Tunnel Stopped");
+					return 10;
+				}
 				long tunnelProcessId=getPidOfProcess(tunnelProcess);
 				stopTunnelProcessUsingPID(tunnelProcessId);
 				Thread.sleep(2000);
@@ -283,7 +292,14 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		  }
 		
 		private void stopTunnelProcessUsingPID(long tunnelProcessId) throws IOException {
-			Runtime.getRuntime().exec("kill -SIGINT "+ tunnelProcessId);
+			if (OSValidator.isWindows()) {
+				String strCmdLine = null;
+		        strCmdLine = String.format("taskkill /PID "+tunnelProcessId +" /F");
+		        logger.info(strCmdLine);
+				Runtime.getRuntime().exec(strCmdLine);
+			}else {
+				Runtime.getRuntime().exec("kill -SIGINT "+ tunnelProcessId);
+			}
 		}
 
 	}

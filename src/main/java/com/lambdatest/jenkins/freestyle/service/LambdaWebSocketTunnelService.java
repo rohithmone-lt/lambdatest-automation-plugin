@@ -110,8 +110,41 @@ public class LambdaWebSocketTunnelService {
 			}
 		} else if (OSValidator.isWindows()) {
 			logger.info("Jenkins configured on Windows");
-		} else if (OSValidator.isSolaris()) {
-			logger.info("Jenkins configured on Solaris");
+			logger.info("Checking for updates " + Constant.WIN_WS_HASH_URL);
+			try {
+				// Get Latest Hash
+				String latestHash = getLatestHash(Constant.WIN_WS_HASH_URL);
+				logger.info(latestHash);
+				// Verify Latest binary version
+				ClassLoader loader = LambdaWebSocketTunnelService.class.getClassLoader();
+				if (loader != null) {
+					URL tunnelFolderPath = loader.getResource(tunnelFolderName);
+					if (tunnelFolderPath != null) {
+						String tunnelBinaryLocation = tunnelFolderPath.getPath() + latestHash;
+						logger.info("Tunnel Binary Location :" + tunnelBinaryLocation);
+						File tunnelBinary = new File(tunnelBinaryLocation);
+						if (tunnelBinary.exists()) {
+							logger.info("Tunnel Binary already exists");
+						} else {
+							String binaryURL = Constant.WIN_WS_BINARY_URL;
+							logger.info("Tunnel Binary doesn't exists, Downloading new binary from ..."+ binaryURL);
+							downloadAndUnZipBinaryFile(tunnelFolderPath.getPath(), latestHash,
+									binaryURL);
+							logger.info("Tunnel Binary downloaded from " + binaryURL);
+						}
+						// Get Tunnel Log path name
+						String tunnelLogPath = getTunnelLogPathForWindows(workspacePath, buildnumber);
+						logger.info("Tunnel Log Path:" + tunnelLogPath);
+						return runCommandLine(tunnelBinaryLocation, tunnelLogPath, user, key, tunnelName,localTunnel,Constant.OS.WIN);
+					} else {
+						logger.warning("tunnelFolderPath empty");
+					}
+				} else {
+					logger.warning("loader empty");
+				}
+			} catch (Exception e) {
+				logger.warning(e.getMessage());
+			}
 		} else {
 			logger.info("Tunnel Option Not Available for this configuration");
 		}
@@ -146,6 +179,37 @@ public class LambdaWebSocketTunnelService {
 ////					FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
 ////					return tunnelPath.getRemote();
 //				}
+			}
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return tunnelLogPath;
+	}
+	
+	private static String getTunnelLogPathForWindows(FilePath workspacePath, String buildnumber) {
+		String tunnelLogPath = "tunnel.log";
+		try {
+			if (workspacePath != null) {
+				// Create Tunnel Log Path
+				tunnelLogPath = new StringBuilder("tunnel").append("-").append(buildnumber).append(".log").toString();
+
+				// Create a Folder in workspace
+				FilePath tunnelFolderPath = new FilePath(workspacePath, Constant.DEFAULT_TUNNEL_FOLDER_NAME);
+				File folder = new File(tunnelFolderPath.getRemote());
+				if (!folder.exists()) {
+					if (folder.mkdir()) {
+						logger.info("Directory is created! at " + tunnelFolderPath.getRemote());
+						FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
+						return tunnelPath.getRemote();
+					} else {
+						logger.info("Failed to create directory! at " + tunnelFolderPath.getRemote());
+						FilePath tunnelPath = new FilePath(workspacePath, tunnelLogPath);
+						return tunnelPath.getRemote();
+					}
+				} else {
+					FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
+					return tunnelPath.getRemote();
+				}
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -238,10 +302,12 @@ public class LambdaWebSocketTunnelService {
 	}
 
 	public static Process runCommandLine(String filePath, String tunnelLogPath, String user, String key,
-			String tunnelName, LocalTunnel localTunnel) throws IOException {
+			String tunnelName, LocalTunnel localTunnel,String ...args) throws IOException {
 		try {
 			//Updating permissions
-			Runtime.getRuntime().exec("chmod 777 " + filePath);
+			if(args.length < 1) {
+				Runtime.getRuntime().exec("chmod 777 " + filePath);
+			}
 			
 			// creating list of process 
 	        List<String> list = new ArrayList<String>(); 
