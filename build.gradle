@@ -29,7 +29,7 @@ plugins {
 }
 
 group = 'org.jenkins-ci.plugins'
-version = '1.16.2'
+version = '1.17'
 description = 'LambdaTest Plugin is used to run automated selenium tests on LambdaTest Cloud'
 
 sourceCompatibility = 1.8
