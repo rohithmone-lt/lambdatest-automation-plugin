@@ -61,7 +61,15 @@
 			 </f:nested> 
 			 <f:entry title="Optional Tunnel Command" field="tunnelExtCommand">
 		       <f:textbox field="tunnelExtCommand" value="${instance.tunnelExtCommand()}" />
-		     </f:entry> 	  
+		     </f:entry>
+		     <f:entry title="Download Tunnel Path" field="downloadTunnelPath">
+		       <f:textbox field="downloadTunnelPath" value="${instance.downloadTunnelPath()}"/>
+		     </f:entry>
+		     <f:nested>
+	     		<table>
+				   <f:optionalBlock title="Use Workspace Path" field="useWorkspacePath" inline="true" checked="${instance.useWorkspacePath}" />
+				</table>
+			 </f:nested> 	  
 		 </f:optionalBlock>
 	</f:block>
 	<f:block>

@@ -115,32 +115,28 @@ public class LambdaWebSocketTunnelService {
 				// Get Latest Hash
 				String latestHash = getLatestHash(Constant.WIN_WS_HASH_URL);
 				logger.info(latestHash);
+				String tunnelBinaryDirLocation = getTunnelBinaryDirLocation(localTunnel, workspacePath) + "\\";
+				logger.info("Tunnel Directory :" + tunnelBinaryDirLocation);
 				// Verify Latest binary version
-				ClassLoader loader = LambdaWebSocketTunnelService.class.getClassLoader();
-				if (loader != null) {
-					URL tunnelFolderPath = loader.getResource(tunnelFolderName);
-					if (tunnelFolderPath != null) {
-						String tunnelBinaryLocation = tunnelFolderPath.getPath() + latestHash;
-						logger.info("Tunnel Binary Location :" + tunnelBinaryLocation);
-						File tunnelBinary = new File(tunnelBinaryLocation);
-						if (tunnelBinary.exists()) {
-							logger.info("Tunnel Binary already exists");
-						} else {
-							String binaryURL = Constant.WIN_WS_BINARY_URL;
-							logger.info("Tunnel Binary doesn't exists, Downloading new binary from ..."+ binaryURL);
-							downloadAndUnZipBinaryFile(tunnelFolderPath.getPath(), latestHash,
-									binaryURL);
-							logger.info("Tunnel Binary downloaded from " + binaryURL);
-						}
-						// Get Tunnel Log path name
-						String tunnelLogPath = getTunnelLogPathForWindows(workspacePath, buildnumber);
-						logger.info("Tunnel Log Path:" + tunnelLogPath);
-						return runCommandLine(tunnelBinaryLocation, tunnelLogPath, user, key, tunnelName,localTunnel,Constant.OS.WIN);
+				if (!tunnelBinaryDirLocation.isEmpty()) {
+					String tunnelBinaryLocation = tunnelBinaryDirLocation + latestHash;
+					logger.info("Tunnel Binary Location :" + tunnelBinaryLocation);
+					File tunnelBinary = new File(tunnelBinaryLocation);
+					if (tunnelBinary.exists()) {
+						logger.info("Tunnel Binary already exists");
 					} else {
-						logger.warning("tunnelFolderPath empty");
+						String binaryURL = Constant.WIN_WS_BINARY_URL;
+						logger.info("Tunnel Binary doesn't exists, Downloading new binary from ..." + binaryURL);
+						downloadAndUnZipBinaryFile(tunnelBinaryDirLocation, latestHash, binaryURL);
+						logger.info("Tunnel Binary downloaded from " + binaryURL);
 					}
+					// Get Tunnel Log path name
+					String tunnelLogPath = getTunnelLogPathForWindows(workspacePath, buildnumber);
+					logger.info("Tunnel Log Path:" + tunnelLogPath);
+					return runCommandLine(tunnelBinaryLocation, tunnelLogPath, user, key, tunnelName, localTunnel,
+							Constant.OS.WIN);
 				} else {
-					logger.warning("loader empty");
+					logger.warning("tunnelFolderPath empty");
 				}
 			} catch (Exception e) {
 				logger.warning(e.getMessage());
@@ -149,6 +145,40 @@ public class LambdaWebSocketTunnelService {
 			logger.info("Tunnel Option Not Available for this configuration");
 		}
 		return null;
+	}
+
+	private static String getTunnelBinaryDirLocation(LocalTunnel localTunnel, FilePath workspacePath) {
+		String tunnelBinaryDirLocation = "";
+		if(localTunnel!=null && localTunnel.isUseWorkspacePath()) {
+			if (workspacePath != null) {
+				// Create a Folder in workspace
+				FilePath tunnelFolderPath = new FilePath(workspacePath, Constant.DEFAULT_TUNNEL_FOLDER_NAME);
+				File folder = new File(tunnelFolderPath.getRemote());
+				if (!folder.exists()) {
+					if (folder.mkdir()) {
+						logger.info("Directory is created! at " + tunnelFolderPath.getRemote());
+						return tunnelFolderPath.getRemote();
+					} else {
+						logger.info("Failed to create directory! at " + tunnelFolderPath.getRemote());
+						return workspacePath.getRemote();
+					}
+				} else {
+					return tunnelFolderPath.getRemote();
+				}
+			}
+		}
+		
+		if(localTunnel!=null && !localTunnel.getDownloadTunnelPath().isEmpty()) {
+			return localTunnel.getDownloadTunnelPath();
+		}
+		ClassLoader loader = LambdaWebSocketTunnelService.class.getClassLoader();
+		if (loader != null) {
+			URL tunnelFolderPath = loader.getResource(tunnelFolderName);
+			if (tunnelFolderPath != null) {
+				return tunnelFolderPath.getPath();
+			}
+		}
+		return tunnelBinaryDirLocation;
 	}
 
 	private static String getTunnelLogPath(FilePath workspacePath, String buildnumber) {
