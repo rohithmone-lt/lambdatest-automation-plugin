@@ -11,14 +11,20 @@ public class LocalTunnel implements Serializable {
 	private boolean sharedTunnel;
 	private boolean websocketTunnel;
 	private String tunnelExtCommand;
+	//Download Tunnel on particular location
+	private String downloadTunnelPath;
+	//Download Tunnel in workspace
+	private boolean useWorkspacePath;
 
 	@DataBoundConstructor
-	public LocalTunnel(boolean useLocalTunnel,String tunnelName, boolean sharedTunnel,boolean websocketTunnel, String tunnelExtCommand) {
+	public LocalTunnel(boolean useLocalTunnel,String tunnelName, boolean sharedTunnel,boolean websocketTunnel, String tunnelExtCommand,String downloadTunnelPath, boolean useWorkspacePath) {
 		super();
 		this.tunnelName = tunnelName;
 		this.sharedTunnel = sharedTunnel;
 		this.websocketTunnel = websocketTunnel;
 		this.tunnelExtCommand = tunnelExtCommand;
+		this.downloadTunnelPath = downloadTunnelPath;
+		this.useWorkspacePath = useWorkspacePath;
 	}
 
 	public String getTunnelName() {
@@ -53,6 +59,22 @@ public class LocalTunnel implements Serializable {
 		this.websocketTunnel = websocketTunnel;
 	}
 
+	public String getDownloadTunnelPath() {
+		return downloadTunnelPath;
+	}
+
+	public void setDownloadTunnelPath(String downloadTunnelPath) {
+		this.downloadTunnelPath = downloadTunnelPath;
+	}
+
+	public boolean isUseWorkspacePath() {
+		return useWorkspacePath;
+	}
+
+	public void setUseWorkspacePath(boolean useWorkspacePath) {
+		this.useWorkspacePath = useWorkspacePath;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -64,6 +86,10 @@ public class LocalTunnel implements Serializable {
 		builder.append(websocketTunnel);
 		builder.append(", \ntunnelExtCommand=");
 		builder.append(tunnelExtCommand);
+		builder.append(", \ndownloadTunnelPath=");
+		builder.append(downloadTunnelPath);
+		builder.append(", \nuseWorkspacePath=");
+		builder.append(useWorkspacePath);
 		builder.append("\n}");
 		return builder.toString();
 	}

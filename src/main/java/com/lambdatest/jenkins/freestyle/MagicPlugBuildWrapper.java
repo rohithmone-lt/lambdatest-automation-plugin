@@ -56,6 +56,10 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 	private String tunnelExtCommand;
 	private Process tunnelProcess;
 	private UserAuthResponse userAuthResponse;
+	
+	//To Save Download Tunnel location
+	private String downloadTunnelPath;
+	private boolean useWorkspacePath;
 
 	//private static final Logger logger = LogManager.getLogger(MagicPlugBuildWrapper.class);
 	private static final Logger logger = Logger.getLogger(MagicPlugBuildWrapper.class.getName());
@@ -85,7 +89,9 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 				this.tunnelName = localTunnel.getTunnelName();
 				this.sharedTunnel= localTunnel.isSharedTunnel();
 				this.websocketTunnel = localTunnel.isWebsocketTunnel();
-				this.tunnelExtCommand= localTunnel.getTunnelExtCommand();
+				this.tunnelExtCommand = localTunnel.getTunnelExtCommand();
+				this.downloadTunnelPath = localTunnel.getDownloadTunnelPath();
+				this.useWorkspacePath = localTunnel.isUseWorkspacePath();
 			}
 		} catch (Exception e) {
 			throw e;
@@ -408,6 +414,21 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		this.websocketTunnel = websocketTunnel;
 	}
 
-	
+	public String getDownloadTunnelPath() {
+		return downloadTunnelPath;
+	}
+
+	public void setDownloadTunnelPath(String downloadTunnelPath) {
+		this.downloadTunnelPath = downloadTunnelPath;
+	}
+
+	public boolean isUseWorkspacePath() {
+		return useWorkspacePath;
+	}
+
+	public void setUseWorkspacePath(boolean useWorkspacePath) {
+		this.useWorkspacePath = useWorkspacePath;
+	}
+
 	
 }
