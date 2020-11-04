@@ -35,7 +35,7 @@ public class LambdaTunnelService {
 	private static String tunnelFolderName = "/";
 
 	public static Process setUp(String user, String key, LocalTunnel localTunnel, String buildnumber, String tunnelName,
-			FilePath workspacePath) {
+								FilePath workspacePath) {
 		if (OSValidator.isUnix()) {
 			logger.info("Jenkins configured on Unix/Linux, getting latest hash");
 			try {
@@ -118,25 +118,25 @@ public class LambdaTunnelService {
 				logger.info("Tunnel Directory :" + tunnelBinaryDirLocation);
 				// Verify Latest binary version
 				if (!tunnelBinaryDirLocation.isEmpty()) {
-						String tunnelBinaryLocation = tunnelBinaryDirLocation + latestHash;
-						logger.info("Tunnel Binary Location :" + tunnelBinaryLocation);
-						File tunnelBinary = new File(tunnelBinaryLocation);
-						if (tunnelBinary.exists()) {
-							logger.info("Tunnel Binary already exists");
-						} else {
-							String binaryURL = Constant.WIN_BINARY_URL;
-							logger.info("Tunnel Binary doesn't exists, Downloading new binary from ..."+ binaryURL);
-							downloadAndUnZipBinaryFile(tunnelBinaryDirLocation, latestHash,
-									binaryURL);
-							logger.info("Tunnel Binary downloaded from " + binaryURL);
-						}
-						// Get Tunnel Log path name
-						String tunnelLogPath = getTunnelLogPathForWindows(workspacePath, buildnumber);
-						logger.info("Tunnel Log Path:" + tunnelLogPath);
-						return runCommandLine(tunnelBinaryLocation, tunnelLogPath, user, key, tunnelName,localTunnel,Constant.OS.WIN);
+					String tunnelBinaryLocation = tunnelBinaryDirLocation + latestHash;
+					logger.info("Tunnel Binary Location :" + tunnelBinaryLocation);
+					File tunnelBinary = new File(tunnelBinaryLocation);
+					if (tunnelBinary.exists()) {
+						logger.info("Tunnel Binary already exists");
 					} else {
-						logger.warning("tunnelFolderPath empty");
+						String binaryURL = Constant.WIN_BINARY_URL;
+						logger.info("Tunnel Binary doesn't exists, Downloading new binary from ..."+ binaryURL);
+						downloadAndUnZipBinaryFile(tunnelBinaryDirLocation, latestHash,
+								binaryURL);
+						logger.info("Tunnel Binary downloaded from " + binaryURL);
 					}
+					// Get Tunnel Log path name
+					String tunnelLogPath = getTunnelLogPathForWindows(workspacePath, buildnumber);
+					logger.info("Tunnel Log Path:" + tunnelLogPath);
+					return runCommandLine(tunnelBinaryLocation, tunnelLogPath, user, key, tunnelName,localTunnel,Constant.OS.WIN);
+				} else {
+					logger.warning("tunnelFolderPath empty");
+				}
 			} catch (Exception e) {
 				logger.warning(e.getMessage());
 			}
@@ -145,7 +145,7 @@ public class LambdaTunnelService {
 		}
 		return null;
 	}
-	
+
 	private static String getTunnelBinaryDirLocation(LocalTunnel localTunnel, FilePath workspacePath) {
 		String tunnelBinaryDirLocation = "";
 		if(localTunnel!=null && localTunnel.isUseWorkspacePath()) {
@@ -166,7 +166,7 @@ public class LambdaTunnelService {
 				}
 			}
 		}
-		
+
 		if(localTunnel!=null && !localTunnel.getDownloadTunnelPath().isEmpty()) {
 			return localTunnel.getDownloadTunnelPath();
 		}
@@ -210,7 +210,7 @@ public class LambdaTunnelService {
 		}
 		return tunnelLogPath;
 	}
-	
+
 	private static String getTunnelLogPathForWindows(FilePath workspacePath, String buildnumber) {
 		String tunnelLogPath = "tunnel.log";
 		try {
@@ -327,31 +327,31 @@ public class LambdaTunnelService {
 	}
 
 	public static Process runCommandLine(String filePath, String tunnelLogPath, String user, String key,
-			String tunnelName, LocalTunnel localTunnel,String ...args) throws IOException {
+										 String tunnelName, LocalTunnel localTunnel,String ...args) throws IOException {
 		try {
 			int availablePort= PortAvailabilityUtils.randomFreePort();
 			//Updating permissions
 			if(args.length < 1) {
 				Runtime.getRuntime().exec("chmod 777 " + filePath);
 			}
-			
-			// creating list of process 
-	        List<String> list = new ArrayList<String>(); 
-	        list.add(filePath);list.add("-user");list.add(user);
-	        list.add("-key");list.add(key);list.add("-logFile");list.add(tunnelLogPath);
-	        list.add("-tunnelName");list.add(tunnelName);list.add("-controller");list.add("jenkins");
-	        if(localTunnel!=null && localTunnel.isSharedTunnel()) {
-	        	list.add("-shared-tunnel");
+
+			// creating list of process
+			List<String> list = new ArrayList<String>();
+			list.add(filePath);list.add("--user");list.add(user);
+			list.add("--key");list.add(key);list.add("--logFile");list.add(tunnelLogPath);
+			list.add("--tunnelName");list.add(tunnelName);list.add("--controller");list.add("jenkins");
+			if(localTunnel!=null && localTunnel.isSharedTunnel()) {
+				list.add("--shared-tunnel");
 			}
-	        if(availablePort > 0) {
-	        	 list.add("-port");list.add(availablePort+"");
-	        }
+			if(availablePort > 0) {
+				list.add("--port");list.add(availablePort+"");
+			}
 			if(localTunnel!=null && !localTunnel.getTunnelExtCommand().isEmpty()) {
 				String[] extCommands=localTunnel.getTunnelExtCommand().split(" ");
 				list.addAll(Arrays.asList(extCommands));
 			}
 			list.add("-v");
-	
+
 			// create the process
 			ProcessBuilder processBuilder = new ProcessBuilder(list);
 			logger.info("Tunnel Binary Command "+processBuilder.command());

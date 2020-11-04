@@ -34,7 +34,7 @@ public class LambdaWebSocketTunnelService {
 	private static String tunnelFolderName = "/";
 
 	public static Process setUp(String user, String key, LocalTunnel localTunnel, String buildnumber, String tunnelName,
-			FilePath workspacePath) {
+								FilePath workspacePath) {
 		logger.info("LambdaWebSocketTunnelService.setup process --start");
 		if (OSValidator.isUnix()) {
 			logger.info("Jenkins configured on Unix/Linux, getting latest hash");
@@ -167,7 +167,7 @@ public class LambdaWebSocketTunnelService {
 				}
 			}
 		}
-		
+
 		if(localTunnel!=null && !localTunnel.getDownloadTunnelPath().isEmpty()) {
 			return localTunnel.getDownloadTunnelPath();
 		}
@@ -185,37 +185,33 @@ public class LambdaWebSocketTunnelService {
 		String tunnelLogPath = "tunnel.log";
 		try {
 			if (workspacePath != null) {
-				return workspacePath.getRemote();
-				
-				
 				// Create Tunnel Log Path
-//				tunnelLogPath = new StringBuilder("tunnel").append("-").append(buildnumber).append(".log").toString();
-//
-//				// Create a Folder in workspace
-//				FilePath tunnelFolderPath = new FilePath(workspacePath, Constant.DEFAULT_TUNNEL_FOLDER_NAME);
-//				File folder = new File(tunnelFolderPath.getRemote());
-//				if (!folder.exists()) {
-//					if (folder.mkdir()) {
-//						logger.info("Directory is created! at " + tunnelFolderPath.getRemote());
-//						FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
-//						return tunnelPath.getRemote();
-//					} else {
-//						logger.info("Failed to create directory! at " + tunnelFolderPath.getRemote());
-//						FilePath tunnelPath = new FilePath(workspacePath, tunnelLogPath);
-//						return tunnelPath.getRemote();
-//					}
-//				} else {
-//					return tunnelFolderPath.getRemote();
-////					FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
-////					return tunnelPath.getRemote();
-//				}
+				tunnelLogPath = new StringBuilder("tunnel").append("-").append(buildnumber).append(".log").toString();
+
+				// Create a Folder in workspace
+				FilePath tunnelFolderPath = new FilePath(workspacePath, Constant.DEFAULT_TUNNEL_FOLDER_NAME);
+				File folder = new File(tunnelFolderPath.getRemote());
+				if (!folder.exists()) {
+					if (folder.mkdir()) {
+						logger.info("Directory is created! at " + tunnelFolderPath.getRemote());
+						FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
+						return tunnelPath.getRemote();
+					} else {
+						logger.info("Failed to create directory! at " + tunnelFolderPath.getRemote());
+						FilePath tunnelPath = new FilePath(workspacePath, tunnelLogPath);
+						return tunnelPath.getRemote();
+					}
+				} else {
+					FilePath tunnelPath = new FilePath(tunnelFolderPath, tunnelLogPath);
+					return tunnelPath.getRemote();
+				}
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 		return tunnelLogPath;
 	}
-	
+
 	private static String getTunnelLogPathForWindows(FilePath workspacePath, String buildnumber) {
 		String tunnelLogPath = "tunnel.log";
 		try {
@@ -332,27 +328,27 @@ public class LambdaWebSocketTunnelService {
 	}
 
 	public static Process runCommandLine(String filePath, String tunnelLogPath, String user, String key,
-			String tunnelName, LocalTunnel localTunnel,String ...args) throws IOException {
+										 String tunnelName, LocalTunnel localTunnel,String ...args) throws IOException {
 		try {
 			//Updating permissions
 			if(args.length < 1) {
 				Runtime.getRuntime().exec("chmod 777 " + filePath);
 			}
-			
-			// creating list of process 
-	        List<String> list = new ArrayList<String>(); 
-	        list.add(filePath);list.add("--user");list.add(user);
-	        list.add("--key");list.add(key);list.add("--logFile");list.add(tunnelLogPath);
-	        list.add("--tunnelName");list.add(tunnelName);list.add("--controller");list.add("jenkins");
-	        if(localTunnel!=null && localTunnel.isSharedTunnel()) {
-	        	list.add("--shared-tunnel");
+
+			// creating list of process
+			List<String> list = new ArrayList<String>();
+			list.add(filePath);list.add("--user");list.add(user);
+			list.add("--key");list.add(key);list.add("--logFile");list.add(tunnelLogPath);
+			list.add("--tunnelName");list.add(tunnelName);list.add("--controller");list.add("jenkins");
+			if(localTunnel!=null && localTunnel.isSharedTunnel()) {
+				list.add("--shared-tunnel");
 			}
 			if(localTunnel!=null && !localTunnel.getTunnelExtCommand().isEmpty()) {
 				String[] extCommands=localTunnel.getTunnelExtCommand().split(" ");
 				list.addAll(Arrays.asList(extCommands));
 			}
-			list.add("--verbose");
-	
+			list.add("--v");
+
 			// create the process
 			ProcessBuilder processBuilder = new ProcessBuilder(list);
 			logger.info("Tunnel Binary Command "+processBuilder.command());
