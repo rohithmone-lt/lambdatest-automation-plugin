@@ -40,6 +40,11 @@ For new `releases`, bump `version` field in `build.gradle`, then execute the fol
 $ gradle release -Prelease.useAutomaticVersion=true
 ```
 
+**Note : Required Java 8 version** 
+```bash
+$ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+```
+
 ## License
 
 This program is free software and is distributed under an [MPL-2.0 License](LICENSE).
