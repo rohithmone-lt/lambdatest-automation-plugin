@@ -4,6 +4,10 @@ import jenkins.model.Jenkins;
 
 public interface Constant {
 
+	String LT_REPORT_DISPLAY_NAME = "LambdaTest Report";
+	String LT_REPORT_URL = "reportLambdaTest";
+	String LT_ICON_FILE_NAME = Jenkins.RESOURCE_PATH + "/plugin/lambdatest-automation/images/logo.png";
+
 	String NOT_AVAILABLE = "NA";
 	String EMPTY = "";
 	String LT_PLATFORM = "LT_PLATFORM";
@@ -66,7 +70,7 @@ public interface Constant {
 	String DEFAULT_TUNNEL_FOLDER_NAME= "lambda-tunnel";
 	String LT_TUNNEL_NAME = "LT_TUNNEL_NAME";
 
-	String LT_ICON_FILE_NAME = Jenkins.RESOURCE_PATH + "/plugin/lambdatest-automation/images/logo.png";
+
 
 
 	//New Binary Path for UnderPass Tunnel
@@ -94,6 +98,18 @@ public interface Constant {
 	interface Arch {
 		String x32 = "32bit";
 		String x64 = "64bit";
+	}
+
+	interface Report {
+		public static final String NAME = "name";
+		public static final String BROWSER = "browser";
+		public static final String OS = "os";
+		public static final String STATUS = "status";
+		public static final String USER_MARKED = "userMarked";
+		public static final String DURATION = "duration";
+		public static final String CREATED_AT = "createdAt";
+		public static final String BUILD_INFO_URL = "https://api.lambdatest.com/automation/api/v1/builds";
+		public static final String SESSION_INFO_URL = "https://api.lambdatest.com/automation/api/v1/sessions";
 	}
 
 }
