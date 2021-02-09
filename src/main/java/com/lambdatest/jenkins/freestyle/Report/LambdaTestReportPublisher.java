@@ -1,6 +1,6 @@
-package com.lambdatest.jenkins.freestyle.Report;
+package com.lambdatest.jenkins.freestyle.report;
 
-import com.lambdatest.jenkins.freestyle.Report.ReportBuildAction;
+import com.lambdatest.jenkins.freestyle.report.ReportBuildAction;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
 import hudson.EnvVars;
 import hudson.Extension;

@@ -29,7 +29,7 @@ import com.lambdatest.jenkins.freestyle.data.LocalTunnel;
 import com.lambdatest.jenkins.freestyle.service.LambdaTunnelService;
 import com.lambdatest.jenkins.freestyle.service.LambdaWebSocketTunnelService;
 import com.lambdatest.jenkins.freestyle.service.OSValidator;
-import com.lambdatest.jenkins.freestyle.Report.ReportBuildAction;
+import com.lambdatest.jenkins.freestyle.report.ReportBuildAction;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;

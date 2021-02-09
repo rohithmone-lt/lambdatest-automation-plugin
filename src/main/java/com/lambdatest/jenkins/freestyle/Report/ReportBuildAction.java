@@ -1,4 +1,4 @@
-package com.lambdatest.jenkins.freestyle.Report;
+package com.lambdatest.jenkins.freestyle.report;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;

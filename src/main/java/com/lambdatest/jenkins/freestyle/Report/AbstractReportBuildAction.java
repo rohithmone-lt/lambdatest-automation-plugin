@@ -1,4 +1,4 @@
-package com.lambdatest.jenkins.freestyle.Report;
+package com.lambdatest.jenkins.freestyle.report;
 
 import hudson.model.Action;
 import hudson.model.Run;
