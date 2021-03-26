@@ -29,7 +29,7 @@ import com.lambdatest.jenkins.freestyle.data.LocalTunnel;
 import com.lambdatest.jenkins.freestyle.service.LambdaTunnelService;
 import com.lambdatest.jenkins.freestyle.service.LambdaWebSocketTunnelService;
 import com.lambdatest.jenkins.freestyle.service.OSValidator;
-
+import com.lambdatest.jenkins.freestyle.report.ReportBuildAction;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
@@ -146,8 +146,10 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 			throws IOException, InterruptedException {
 		logger.info(build.getWorkspace().getName());
 		String buildname = build.getFullDisplayName().substring(0,
-				build.getFullDisplayName().length() - (String.valueOf(build.getNumber()).length() + 1));
+				build.getFullDisplayName().length() - (String.valueOf(build.getNumber()).length() + 2));
+		buildname = "jenkins-" + buildname + "-" + build.getNumber();
 		String buildnumber = String.valueOf(build.getNumber());
+		logger.info("buildName : " + buildname);
 		// Configure Tunnel
 		if (this.localTunnel != null && this.useLocalTunnel) {
 			configureTunnel(this.localTunnel, buildname, buildnumber,build.getWorkspace());
@@ -170,13 +172,13 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		String browserVersion = seleniumCapabilityRequest.getString(Constant.BROWSER_VERSION);
 		String resolution = seleniumCapabilityRequest.getString(Constant.RESOLUTION);
 
-		LambdaFreeStyleBuildAction lfsBuildAction = new LambdaFreeStyleBuildAction("SeleniumTest", operatingSystem,
-				browserName, browserVersion, resolution);
-		lfsBuildAction.setBuild(build);
-		lfsBuildAction.setBuildName(buildname);
-		lfsBuildAction.setBuildNumber(buildnumber);
-		lfsBuildAction.setIframeLink(CapabilityService.buildIFrameLink(buildnumber, username, accessToken, choice));
-		build.addAction(lfsBuildAction);
+//		LambdaFreeStyleBuildAction lfsBuildAction = new LambdaFreeStyleBuildAction("SeleniumTest", operatingSystem,
+//				browserName, browserVersion, resolution);
+//		lfsBuildAction.setBuild(build);
+//		lfsBuildAction.setBuildName(buildname);
+//		lfsBuildAction.setBuildNumber(buildnumber);
+//		lfsBuildAction.setIframeLink(CapabilityService.buildIFrameLink(buildnumber, username, accessToken, choice));
+//		build.addAction(lfsBuildAction);
 	}
 
 	@Override
@@ -195,7 +197,8 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		@Override
 		public void buildEnvVars(Map<String, String> env) {
 			String buildname = build.getFullDisplayName().substring(0,
-					build.getFullDisplayName().length() - (String.valueOf(build.getNumber()).length() + 1));
+					build.getFullDisplayName().length() - (String.valueOf(build.getNumber()).length() + 2));
+			buildname = "jenkins-" + buildname + "-" + build.getNumber();
 			String buildnumber = String.valueOf(build.getNumber());
 			if (!CollectionUtils.isEmpty(seleniumCapabilityRequest) && seleniumCapabilityRequest.size() == 1) {
 				JSONObject seleniumCapability = seleniumCapabilityRequest.get(0);
