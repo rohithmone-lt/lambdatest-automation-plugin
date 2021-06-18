@@ -65,7 +65,7 @@ public class ReportBuildAction extends AbstractReportBuildAction {
                         lambdaTestBuildBrowserUrl = "https://automation.lambdatest.com/logs/?build=" + build_id;
 
                         logger.info("lambdaTestBuildBrowserUrl : " + lambdaTestBuildBrowserUrl);
-                        URL sessionUrl = new URL(Constant.Report.SESSION_INFO_URL + "?build_id=" + build_id);
+                        URL sessionUrl = new URL(Constant.Report.SESSION_INFO_URL + "?limit=100&build_id=" + build_id);
                         URLConnection sessionUrlConnection = sessionUrl.openConnection();
                         sessionUrlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
                         is = sessionUrlConnection.getInputStream();
