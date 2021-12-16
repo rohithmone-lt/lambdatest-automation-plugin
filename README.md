@@ -20,6 +20,8 @@ https://github.com/jenkinsci/gradle-jpi-plugin
 
 ###### This command will run the gradle Task :build
 <pre>gradle build</pre>
+or
+<pre>./gradlew build</pre>
 
 ###### This command will run the gradle Task :server
 <pre>gradle server</pre>
@@ -43,6 +45,11 @@ $ gradle release -Prelease.useAutomaticVersion=true
 **Note : Required Java 8 version** 
 ```bash
 $ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+```
+
+**Required Gradle version 4.7**
+```bash
+$ ./gradlew wrapper --gradle-version 4.7
 ```
 
 ## License
