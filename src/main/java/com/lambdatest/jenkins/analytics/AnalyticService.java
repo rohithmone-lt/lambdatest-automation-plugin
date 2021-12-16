@@ -5,13 +5,13 @@ import com.lambdatest.jenkins.analytics.data.AnalyticRequest;
 import com.lambdatest.jenkins.freestyle.api.Constant;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
+
 
 public class AnalyticService implements Runnable {
 
-	//private final static Logger logger = Logger.getLogger(CapabilityService.class.getName());
-	private static final Logger logger = LogManager.getLogger(AnalyticService.class);
+	
+	private static final Logger logger = Logger.getLogger(AnalyticService.class.getName());
 
 	private AnalyticRequest analyticRequest;
 
@@ -20,7 +20,7 @@ public class AnalyticService implements Runnable {
 		try {
 			CapabilityService.sendPostRequest(Constant.ANALYTICS_URL, analyticRequest);
 		} catch (Exception e) {
-			logger.warn(e.getMessage());
+			logger.warning(e.getMessage());
 		}
 	}
 
