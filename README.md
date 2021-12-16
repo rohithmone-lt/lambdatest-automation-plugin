@@ -51,6 +51,13 @@ $ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 ```bash
 $ ./gradlew wrapper --gradle-version 4.7
 ```
+## Manual install
+
+1. Open Jenkins in a browser; e.g. http://jenkins_host:8080
+2. Browse to 'Manage Jenkins' --> 'Manage Plugins’ and select the **Advanced** tab.
+3. Click the **Browse** button in the 'Upload Plugin' section. 
+4. Find the location of the 'lambdatest-automation.hpi' file and click the **Open** button. 
+5. Click the **Download now and install after restart** button (this might be different on the newer version). 
 
 ## License
 
