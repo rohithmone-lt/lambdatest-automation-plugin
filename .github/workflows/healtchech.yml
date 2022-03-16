@@ -1,0 +1,20 @@
+name: Jenkins Health Check
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  push:
+    branches:
+      - master
+   
+jobs:
+    build:
+        name: Call Jenkins Build
+        runs-on: ubuntu-latest
+        steps:
+        - name: Jenkins Trigger Job
+          uses: appleboy/jenkins-action@master
+          with:
+            url: "https://ml-poc-jenkins.lambdatest.io"
+            user: "shivanshus@lambdatest.com"
+            token: "11201fde981e42772fadebd2a81c43c6df"
+            job: "shiv_POC"
