@@ -18,3 +18,12 @@ jobs:
             user: "shivanshus@lambdatest.com"
             token: "11201fde981e42772fadebd2a81c43c6df"
             job: "shiv_POC"
+        - name: "Trigger jenkins job"
+          uses: GoldenspearLLC/build-jenkins-job@master
+          with:
+            jenkins-url: https://ml-poc-jenkins.lambdatest.io
+            jenkins-token: "11201fde981e42772fadebd2a81c43c6df"
+            user: "shivanshus@lambdatest.com"
+            job-path: "job/shiv_POC"
+        - name: Get job status
+          run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
