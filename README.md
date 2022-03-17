@@ -1,4 +1,5 @@
 # Lambdatest Jenkins Plugin
+[![Build Status](https://ml-poc-jenkins.lambdatest.io/buildStatus/icon?job=shiv_POC)](https://ml-poc-jenkins.lambdatest.io/job/shiv_POC/)
 
 #### This Plugin is used to run automated selenium tests on LambdaTest Cloud.
 
