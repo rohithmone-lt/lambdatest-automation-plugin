@@ -16,5 +16,5 @@ jobs:
           with:
             url: "https://ml-poc-jenkins.lambdatest.io"
             user: "shivanshus@lambdatest.com"
-            token: "11201fde981e42772fadebd2a81c43c6df"
+            token: ${{ secrets.AUTH_TOKEN }}
             job: "shiv_POC"
