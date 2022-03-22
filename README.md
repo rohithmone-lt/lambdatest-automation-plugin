@@ -1,6 +1,5 @@
 # Lambdatest Jenkins Plugin
-[![Build Status](https://ml-poc-jenkins.lambdatest.io/buildStatus/icon?job=shiv_POC)](https://ml-poc-jenkins.lambdatest.io/job/shiv_POC/)
-
+[![Build Status](https://security-jenkins.lambdatest.io/buildStatus/icon?job=HealthCheck)](https://security-jenkins.lambdatest.io/job/HealthCheck/)
 #### This Plugin is used to run automated selenium tests on LambdaTest Cloud.
 
 ### Base Configuration
