@@ -14,7 +14,7 @@ jobs:
         - name: Jenkins Trigger Job
           uses: appleboy/jenkins-action@master
           with:
-            url: "https://ml-poc-jenkins.lambdatest.io"
-            user: "shivanshus@lambdatest.com"
+            url: "https://security-jenkins.lambdatest.io"
+            user: "shivanshus"
             token: ${{ secrets.AUTH_TOKEN }}
-            job: "shiv_POC"
+            job: "HealthCheck"
