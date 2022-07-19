@@ -125,11 +125,11 @@ public class AppiumCapabilityService {
 		}
 	}
 
-    // public static void main(String[] args) throws Exception {
-	// 	System.out.println(getAppiumOperatingSystems());
-	// 	System.out.println(getDeviceNames("android"));
-	// 	System.out.println(getDeviceVersions("android", "Zenfone 6"));
-	// 	System.out.println(allDeviceVersions);
-	// }
+    public static void main(String[] args) throws Exception {
+	System.out.println(getAppiumOperatingSystems());
+	System.out.println(getDeviceNames("android"));
+	System.out.println(getDeviceVersions("android", "Zenfone 6"));
+	System.out.println(allDeviceVersions);
+    }
     
 }
