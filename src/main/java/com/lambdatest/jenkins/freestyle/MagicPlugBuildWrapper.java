@@ -24,6 +24,7 @@ import com.lambdatest.jenkins.credential.MagicPlugCredentials;
 import com.lambdatest.jenkins.credential.MagicPlugCredentialsImpl;
 import com.lambdatest.jenkins.freestyle.api.Constant;
 import com.lambdatest.jenkins.freestyle.api.auth.UserAuthResponse;
+import com.lambdatest.jenkins.freestyle.api.service.AppiumCapabilityService;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
 import com.lambdatest.jenkins.freestyle.data.LocalTunnel;
 import com.lambdatest.jenkins.freestyle.service.LambdaTunnelService;
@@ -43,6 +44,8 @@ import net.sf.json.JSONObject;
 public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable {
 
 	private List<JSONObject> seleniumCapabilityRequest;
+	private List<JSONObject> appiumCapabilityRequest;
+	private String appUrl;
 	private String credentialsId;
 	private String username;
 	private Secret accessToken;
@@ -65,7 +68,7 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 	private static final Logger logger = Logger.getLogger(MagicPlugBuildWrapper.class.getName());
 	
 	@DataBoundConstructor
-	public MagicPlugBuildWrapper(StaplerRequest req, @CheckForNull List<JSONObject> seleniumCapabilityRequest,
+	public MagicPlugBuildWrapper(StaplerRequest req, @CheckForNull List<JSONObject> seleniumCapabilityRequest, @CheckForNull List<JSONObject> appiumCapabilityRequest,
 			@CheckForNull String credentialsId, String choice, boolean useLocalTunnel, LocalTunnel localTunnel,
 			ItemGroup context) throws Exception {
 		try {
@@ -76,6 +79,13 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 			} else {
 				validateTestInput(seleniumCapabilityRequest);
 				this.seleniumCapabilityRequest = seleniumCapabilityRequest;
+			}
+			if (appiumCapabilityRequest == null) {
+				// prevent null pointer
+				this.appiumCapabilityRequest = new ArrayList<JSONObject>();
+			} else {
+				validateTestInput(appiumCapabilityRequest);
+				this.appiumCapabilityRequest = appiumCapabilityRequest;
 			}
 			// Setting up credentials in both case if input capabilities are there or not
 			this.choice = choice;
@@ -160,7 +170,11 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		}
 
 		// Create Grid URL
-		this.gridURL = CapabilityService.buildHubURL(this.username, this.accessToken.getPlainText(),"production");
+		if (!CollectionUtils.isEmpty(seleniumCapabilityRequest)) {
+			this.gridURL = CapabilityService.buildHubURL(this.username, this.accessToken.getPlainText(),"production");
+		} else if (!CollectionUtils.isEmpty(appiumCapabilityRequest)) {
+			this.gridURL = AppiumCapabilityService.appiumBuildHubURL(this.username, this.accessToken.getPlainText(),"production");
+		}
 		logger.info(this.gridURL);
 		return new MagicPlugEnvironment(build);
 	}
@@ -207,7 +221,15 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 				env.put(Constant.LT_BROWSER_VERSION, seleniumCapability.getString(Constant.BROWSER_VERSION));
 				env.put(Constant.LT_RESOLUTION, seleniumCapability.getString(Constant.RESOLUTION));
 			}
+			if (!CollectionUtils.isEmpty(appiumCapabilityRequest) && appiumCapabilityRequest.size() == 1) {
+				JSONObject appiumCapability = appiumCapabilityRequest.get(0);
+				env.put(Constant.LT_PLATFORM, appiumCapability.getString(Constant.OPERATING_SYSTEM));
+				env.put(Constant.LT_DEVICE_NAME, appiumCapability.getString(Constant.DEVICE_NAME));
+				env.put(Constant.LT_DEVICE_VERSION, appiumCapability.getString(Constant.DEVICE_VERSION));
+				env.put(Constant.LT_APP_URL, appiumCapability.getString(Constant.APP_ID));
+			}
 			env.put(Constant.LT_BROWSERS, createBrowserJSON(seleniumCapabilityRequest));
+			env.put(Constant.LT_DEVICES, createDeviceJSON(appiumCapabilityRequest));
 			env.put(Constant.LT_GRID_URL, gridURL);
 			env.put(Constant.LT_BUILD_NAME, buildname);
 			env.put(Constant.LT_BUILD_NUMBER, buildnumber);
@@ -241,6 +263,18 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 				ObjectMapper objectMapper = new ObjectMapper();
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				config = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(seleniumCapabilityRequests);
+			} catch (JsonProcessingException e) {
+				logger.warning(e.getMessage());
+			}
+			return config;
+		}
+
+		private String createDeviceJSON(List<JSONObject> appiumCapabilityRequests) {
+			String config = Constant.NOT_AVAILABLE;
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				config = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(appiumCapabilityRequests);
 			} catch (JsonProcessingException e) {
 				logger.warning(e.getMessage());
 			}
@@ -319,6 +353,22 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 
 	public void setSeleniumCapabilityRequest(List<JSONObject> seleniumCapabilityRequest) {
 		this.seleniumCapabilityRequest = seleniumCapabilityRequest;
+	}
+
+	public List<JSONObject> getAppiumCapabilityRequest() {
+		return appiumCapabilityRequest;
+	}
+
+	public void setAppiumCapabilityRequest(List<JSONObject> appiumCapabilityRequest) {
+		this.appiumCapabilityRequest = appiumCapabilityRequest;
+	}
+
+	public String getAppUrl() {
+		return appUrl;
+	}
+
+	public void setAppurl(String appUrl) {
+		this.appUrl = appUrl;
 	}
 
 	public String getUsername() {

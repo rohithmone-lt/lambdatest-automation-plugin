@@ -14,7 +14,12 @@ public class OSValidator {
 			System.out.println("This is Unix or Linux");
 		} else if (isSolaris()) {
 			System.out.println("This is Solaris");
-		} else {
+		} else if (isAndroid()) {
+			System.out.println("This is Android");
+		} else if (isIOS()) {
+			System.out.println("This is iOS");
+		} 
+		else {
 			System.out.println("Your OS is not support!!");
 		}
 	}
@@ -33,6 +38,14 @@ public class OSValidator {
 
 	public static boolean isSolaris() {
 		return (OS.indexOf("sunos") >= 0);
+	}
+
+	public static boolean isAndroid() {
+		return (OS.indexOf("android") >= 0);
+	}
+
+	public static boolean isIOS() {
+		return (OS.indexOf("ios") >= 0);
 	}
 
 }

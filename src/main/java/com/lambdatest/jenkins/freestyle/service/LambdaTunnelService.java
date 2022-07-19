@@ -293,11 +293,12 @@ public class LambdaTunnelService {
 		try {
 			logger.info(tunnelBinaryFileName);
 			BufferedInputStream in = new BufferedInputStream(new URL(linuxBinaryUrl).openStream());
-			FileOutputStream fileOutputStream = new FileOutputStream(tunnelBinaryFileName);
-			byte dataBuffer[] = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-				fileOutputStream.write(dataBuffer, 0, bytesRead);
+			try (FileOutputStream fileOutputStream = new FileOutputStream(tunnelBinaryFileName)) {
+				byte dataBuffer[] = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+					fileOutputStream.write(dataBuffer, 0, bytesRead);
+				}
 			}
 			logger.info("Binary Downloaded.\n");
 		} catch (Exception e) {

@@ -61,7 +61,7 @@ public class CapabilityService {
 		}
 		return CapabilityService.supportedOS;
 	}
-
+	
 	private static void parseSupportedOsAndResolution(OSList osList) {
 		if (osList != null && osList.getOs() != null) {
 			osList.getOs().forEach(os -> {

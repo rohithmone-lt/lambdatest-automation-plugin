@@ -49,6 +49,29 @@
 				</table>
 			</f:repeatable>
 		</f:entry>
+		<f:entry title="Appium Tests">
+			<f:repeatable var="appiumCapabilityRequest" items="${instance.appiumCapabilityRequest}"  add="Add Appium Test Capability">
+				<table width="100%">
+					<f:entry title="Operating System" field="operatingSystem">
+						<f:select value="${appiumCapabilityRequest.operatingSystem}" />
+					</f:entry>
+					<f:entry title="Device Name" progress="Loading" field="deviceName">
+						<f:select value="${appiumCapabilityRequest.deviceName}" />
+					</f:entry>
+					<f:entry title="Device Version" progress="Loading" field="deviceVersion">
+						<f:select value="${appiumCapabilityRequest.deviceVersion}" />
+					</f:entry>
+					<f:entry title="App Url" field="appUrl">
+						<f:textbox value="${appiumCapabilityRequest.appUrl}"/>
+					</f:entry>
+					<f:entry title="">
+						<div align="right">
+							<f:repeatableDeleteButton value="Delete Appium Test" />
+						</div>
+					</f:entry>
+				</table>
+			</f:repeatable>
+		</f:entry>
 		<f:optionalBlock title="Use Local Tunnel" field="localTunnel" checked="${instance.useLocalTunnel}">
 		     <f:entry title="Tunnel Name" field="tunnelName">
 		       <f:textbox field="tunnelName" value="${instance.tunnelName()}"/>
