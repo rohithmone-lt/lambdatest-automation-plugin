@@ -224,11 +224,13 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 			if (!CollectionUtils.isEmpty(appiumCapabilityRequest) && appiumCapabilityRequest.size() == 1) {
 				JSONObject appiumCapability = appiumCapabilityRequest.get(0);
 				env.put(Constant.LT_PLATFORM, appiumCapability.getString(Constant.OPERATING_SYSTEM));
+				env.put(Constant.LT_BRAND_NAME, appiumCapability.getString(Constant.BRAND_NAME));
 				env.put(Constant.LT_DEVICE_NAME, appiumCapability.getString(Constant.DEVICE_NAME));
 				env.put(Constant.LT_DEVICE_VERSION, appiumCapability.getString(Constant.DEVICE_VERSION));
 				env.put(Constant.LT_APP_URL, appiumCapability.getString(Constant.APP_ID));
 			}
 			env.put(Constant.LT_BROWSERS, createBrowserJSON(seleniumCapabilityRequest));
+			env.put(Constant.LT_BRANDS, createBrandJSON(appiumCapabilityRequest));
 			env.put(Constant.LT_DEVICES, createDeviceJSON(appiumCapabilityRequest));
 			env.put(Constant.LT_GRID_URL, gridURL);
 			env.put(Constant.LT_BUILD_NAME, buildname);
@@ -270,6 +272,18 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		}
 
 		private String createDeviceJSON(List<JSONObject> appiumCapabilityRequests) {
+			String config = Constant.NOT_AVAILABLE;
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				config = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(appiumCapabilityRequests);
+			} catch (JsonProcessingException e) {
+				logger.warning(e.getMessage());
+			}
+			return config;
+		}
+
+		private String createBrandJSON(List<JSONObject> appiumCapabilityRequests) {
 			String config = Constant.NOT_AVAILABLE;
 			try {
 				ObjectMapper objectMapper = new ObjectMapper();

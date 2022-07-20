@@ -1,7 +1,6 @@
 package com.lambdatest.jenkins.freestyle.api.service;
 
-// import java.util.ArrayList;
-// import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -27,8 +26,10 @@ public class AppiumCapabilityService {
     private final static Logger logger = Logger.getLogger(CapabilityService.class.getName());
 
 	public static Map<String, String> appiumSupportedOS = new LinkedHashMap<>();
+	public static Set<String> supportedBrands;
 	public static Set<String> supportedDevices;
-	public static Map<String, Set<String>> allDeviceNames = new LinkedHashMap<>();
+	public static Map<String, Set<String>> allBrandNames = new LinkedHashMap<>();
+	public static Map<AppiumDeviceKey, List<Device>> allDeviceNames = new LinkedHashMap<>();
 	public static Map<AppiumVersionKey, List<DeviceVersion>> allDeviceVersions = new LinkedHashMap<>();
 	public static Set<String> supportedDeviceVersions;
 
@@ -37,7 +38,6 @@ public class AppiumCapabilityService {
 			if (MapUtils.isEmpty(appiumSupportedOS)) {
 				appiumSupportedOS = new LinkedHashMap<>();
 				String jsonResponse = CapabilityService.sendGetRequest(Constant.APPIUM_OS_API_URL);
-				logger.info("got the response for getting os : " + jsonResponse);
 				ObjectMapper objectMapper = new ObjectMapper();
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				OsList osList = objectMapper.readValue(jsonResponse, OsList.class);
@@ -46,7 +46,7 @@ public class AppiumCapabilityService {
 		} catch (Exception e) {
 			logger.warning(e.getMessage());
 		}
-		return AppiumCapabilityService.appiumSupportedOS;
+		return appiumSupportedOS;
 	}
 
     private static void parseAppiumSupportedOs(OsList osList) {
@@ -57,13 +57,13 @@ public class AppiumCapabilityService {
 		}
 	}
 
-    public static Set<String> getDeviceNames(String operatingSystem) {
+	public static Set<String> getBrandNames(String operatingSystem) {
 		try {
-			if (allDeviceNames.containsKey(operatingSystem)) {
-				logger.info("Supported Device List Exists for " + operatingSystem);
-				return allDeviceNames.get(operatingSystem);
+			if (allBrandNames.containsKey(operatingSystem)) {
+				logger.info("Supported Brand List Exists for " + operatingSystem);
+				return allBrandNames.get(operatingSystem);
 			}
-			supportedDevices = new LinkedHashSet<String>();
+			supportedBrands = new LinkedHashSet<String>();
 			String deviceApiURL = Constant.DEVICE_API_URL;
 			String jsonResponse = CapabilityService.sendGetRequest(deviceApiURL);
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -71,28 +71,51 @@ public class AppiumCapabilityService {
             JSONObject jsonObj = new JSONObject(jsonResponse);
             String jsonResponseOs = jsonObj.getJSONArray(operatingSystem).toString();
 			List<Devices> devices = objectMapper.readValue(jsonResponseOs, new TypeReference<List<Devices>>() {});
-			parseSupportedDevices(devices, operatingSystem);
+			parseSupportedBrandsAndDevices(devices, operatingSystem);
 		} catch (Exception e) {
 			logger.warning(e.getMessage());
 		}
-		return supportedDevices;
+		return supportedBrands;
 	}
 
-    private static Set<String> parseSupportedDevices(List<Devices> devices, String operatingSystem) {
+    private static Set<String> parseSupportedBrandsAndDevices(List<Devices> devices, String operatingSystem) {
 		if (!CollectionUtils.isEmpty(devices)) {
 			devices.forEach(devs -> {
-				List<Device> device = devs.getDevices();
-				device.forEach(dev ->  {
+				List<Device> realDevices = new ArrayList<Device>();
+				Set<String> supportedDevice = new LinkedHashSet<String>();
+				devs.getDevices().forEach(dev ->  {
 					if (dev.getDeviceType().equals("real")) {
-						supportedDevices.add(dev.getDeviceName());
+						supportedDevice.add(dev.getDeviceName());
+						realDevices.add(dev);
 						AppiumVersionKey avk = new AppiumVersionKey(operatingSystem, dev.getDeviceName());
 						if (!CollectionUtils.isEmpty(dev.getVersions())) {
 							allDeviceVersions.put(avk, dev.getVersions());
 						}
 					}
 				});
+				if (!realDevices.isEmpty()) {
+					supportedBrands.add(devs.getBrandName());
+					AppiumDeviceKey adk = new AppiumDeviceKey(operatingSystem, devs.getBrandName());
+					if (!CollectionUtils.isEmpty(realDevices)) {
+						allDeviceNames.put(adk, realDevices);
+					}
+				}
 			});
-			allDeviceNames.put(operatingSystem, supportedDevices);
+			allBrandNames.put(operatingSystem, supportedBrands);
+		}
+		return supportedBrands;
+	}
+
+	public static Set<String> getDeviceNames(String operatingSystem, String brandName) {
+		supportedDevices = new LinkedHashSet<String>();
+		AppiumDeviceKey adk = new AppiumDeviceKey(operatingSystem, brandName);
+		if (allDeviceNames.containsKey(adk)) {
+			logger.info("Supported Device List Exists for " + brandName);
+			allDeviceNames.get(adk).forEach(dn -> {
+				supportedDevices.add(dn.getDeviceName());
+			});
+		} else {
+			System.out.println(adk + " not found");
 		}
 		return supportedDevices;
 	}
@@ -101,8 +124,9 @@ public class AppiumCapabilityService {
 		supportedDeviceVersions = new LinkedHashSet<String>();
 		AppiumVersionKey avk = new AppiumVersionKey(operatingSystem, deviceName);
 		if (allDeviceVersions.containsKey(avk)) {
-			allDeviceVersions.get(avk).forEach(bv -> {
-				supportedDeviceVersions.add(bv.getVersion());
+			logger.info("2. Supported Device Versions List Exists for " + operatingSystem + ":" + deviceName);
+			allDeviceVersions.get(avk).forEach(dv -> {
+				supportedDeviceVersions.add(dv.getVersion());
 			});
 		} else {
 			System.out.println(avk + " not found");
@@ -125,11 +149,12 @@ public class AppiumCapabilityService {
 		}
 	}
 
-    // public static void main(String[] args) throws Exception {
-	// 	System.out.println(getAppiumOperatingSystems());
-	// 	System.out.println(getDeviceNames("android"));
-	// 	System.out.println(getDeviceVersions("android", "Zenfone 6"));
-	// 	System.out.println(allDeviceVersions);
-	// }
+    public static void main(String[] args) throws Exception {
+		System.out.println(getAppiumOperatingSystems());
+		System.out.println(getBrandNames("android"));
+		System.out.println(getDeviceNames("android", "Asus"));
+		System.out.println(getDeviceVersions("android", "Zenfone 6"));
+		System.out.println(allDeviceVersions);
+	}
     
 }

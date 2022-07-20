@@ -26,6 +26,32 @@
         		<option value="dev">dev</option>
    			</select>
 		</f:entry> -->
+		<f:entry title="Appium Tests">
+			<f:repeatable var="appiumCapabilityRequest" items="${instance.appiumCapabilityRequest}"  add="Add Appium Test Capability">
+				<table width="100%">
+					<f:entry title="Operating System" field="operatingSystem">
+						<f:select value="${appiumCapabilityRequest.operatingSystem}" />
+					</f:entry>
+					<f:entry title="Brand Name" progress="Loading" field="brandName">
+						<f:select value="${appiumCapabilityRequest.brandName}" />
+					</f:entry>
+					<f:entry title="Device Name" progress="Loading" field="deviceName">
+						<f:select value="${appiumCapabilityRequest.deviceName}" />
+					</f:entry>
+					<f:entry title="Device Version" progress="Loading" field="deviceVersion">
+						<f:select value="${appiumCapabilityRequest.deviceVersion}"/>
+					</f:entry>
+					<f:entry title="App Url" field="appUrl">
+						<f:textbox value="${appiumCapabilityRequest.appUrl}"/>
+					</f:entry>
+					<f:entry title="">
+						<div align="right">
+							<f:repeatableDeleteButton value="Delete Appium Test" />
+						</div>
+					</f:entry>
+				</table>
+			</f:repeatable>
+		</f:entry>
 		<f:entry title="Selenium Tests">
 			<f:repeatable var="seleniumCapabilityRequest" items="${instance.seleniumCapabilityRequest}"  add="Add Selenium Test Capability">
 				<table width="100%">
@@ -44,29 +70,6 @@
 					<f:entry title="">
 						<div align="right">
 							<f:repeatableDeleteButton value="Delete Selenium Test" />
-						</div>
-					</f:entry>
-				</table>
-			</f:repeatable>
-		</f:entry>
-		<f:entry title="Appium Tests">
-			<f:repeatable var="appiumCapabilityRequest" items="${instance.appiumCapabilityRequest}"  add="Add Appium Test Capability">
-				<table width="100%">
-					<f:entry title="Operating System" field="operatingSystem">
-						<f:select value="${appiumCapabilityRequest.operatingSystem}" />
-					</f:entry>
-					<f:entry title="Device Name" progress="Loading" field="deviceName">
-						<f:select value="${appiumCapabilityRequest.deviceName}" />
-					</f:entry>
-					<f:entry title="Device Version" progress="Loading" field="deviceVersion">
-						<f:select value="${appiumCapabilityRequest.deviceVersion}" />
-					</f:entry>
-					<f:entry title="App Url" field="appUrl">
-						<f:textbox value="${appiumCapabilityRequest.appUrl}"/>
-					</f:entry>
-					<f:entry title="">
-						<div align="right">
-							<f:repeatableDeleteButton value="Delete Appium Test" />
 						</div>
 					</f:entry>
 				</table>

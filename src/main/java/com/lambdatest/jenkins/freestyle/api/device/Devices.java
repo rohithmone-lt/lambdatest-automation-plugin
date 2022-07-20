@@ -12,21 +12,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class Devices {
 
-
     @JsonProperty("brand")
 	private String brand;
 	@JsonProperty("devices")
 	private List<Device> devices = null;
-
-	// @JsonProperty("id")
-	// public String getId() {
-	// 	return id;
-	// }
-
-	// @JsonProperty("id")
-	// public void setId(String id) {
-	// 	this.id = id;
-	// }
 
     @JsonProperty("brand")
 	public String getBrandName() {

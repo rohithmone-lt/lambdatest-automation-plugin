@@ -7,30 +7,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ 
-    "id", 
     "deviceName", 
+	"deviceType",
     "osVersion" 
 })
 public class Device {
     
-    // @JsonProperty("id")
-	// private String id;
 	@JsonProperty("deviceName")
 	private String deviceName;
 	@JsonProperty("deviceType")
 	private String deviceType;
 	@JsonProperty("osVersion")
 	private List<DeviceVersion> deviceVersions = null;
-
-	// @JsonProperty("id")
-	// public String getId() {
-	// 	return id;
-	// }
-
-	// @JsonProperty("id")
-	// public void setId(String id) {
-	// 	this.id = id;
-	// }
 
     @JsonProperty("deviceName")
 	public String getDeviceName() {

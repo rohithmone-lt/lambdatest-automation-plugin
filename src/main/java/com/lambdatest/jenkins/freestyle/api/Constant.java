@@ -1,7 +1,5 @@
 package com.lambdatest.jenkins.freestyle.api;
 
-import javax.print.DocFlavor.STRING;
-
 import jenkins.model.Jenkins;
 
 public interface Constant {
@@ -22,7 +20,9 @@ public interface Constant {
 	String LT_BUILD_NUMBER = "LT_BUILD_NUMBER";
 	String LT_USERNAME = "LT_USERNAME";
 	String LT_ACCESS_KEY = "LT_ACCESS_KEY";
+	String LT_BRANDS = "LT_BRANDS";
 	String LT_DEVICES = "LT_DEVICES";
+	String LT_BRAND_NAME = "LT_BRAND_NAME";
 	String LT_DEVICE_NAME = "LT_DEVICE_NAME";
 	String LT_DEVICE_VERSION = "LT_DEVICE_VERSION";
 	String LT_APP_URL = "LT_DEVICE_VERSION";
@@ -32,12 +32,12 @@ public interface Constant {
 	String BROWSER_VERSION = "browserVersion";
 	String RESOLUTION = "resolution";
 
+	String BRAND_NAME = "brandName";
 	String DEVICE_NAME = "deviceName";
 	String DEVICE_VERSION = "deviceVersion";
 	String APP_ID = "appUrl"; 
 
 	String OS_API_URL = "https://api.lambdatest.com/api/v1/capability?format=array";
-	// String OS_API_URL = "https://api.lambdatest.com/api/v1/capability?grid=appium";
 	String BROWSER_API_URL = "https://api.lambdatest.com/api/v1/capability?format=array&os=";
 	String AUTH_API_URL = "https://accounts.lambdatest.com/api/user/token/auth";
 	String ANALYTICS_URL = "https://backend.lambdatest.com/api/analytics/automation-plugin-usage";
@@ -66,12 +66,13 @@ public interface Constant {
 	}
 
 	String DEFAULT_OPERATING_SYSTEM_VALUE = "Select Operating System";
-	String DEFAULT_BROWSER_NAME_VALUE = "Select BrowserName";
-	String DEFAULT_BROWSER_VERSION_VALUE = "Select BrowserVersion";
+	String DEFAULT_BROWSER_NAME_VALUE = "Select Browser Name";
+	String DEFAULT_BROWSER_VERSION_VALUE = "Select Browser Version";
 	String DEFAULT_RESOLUTION_VALUE = "Select Screen Resolution";
 
-	String DEFAULT_DEVICE_NAME_VALUE = "Select DeviceName";
-	String DEFAULT_DEVICE_VERSION_VALUE = "Select DeviceVersion";
+	String DEFAULT_BRAND_NAME_VALUE = "Select Brand Name";
+	String DEFAULT_DEVICE_NAME_VALUE = "Select Device Name";
+	String DEFAULT_DEVICE_VERSION_VALUE = "Select Device Version";
 	String DEFAULT_APP_URL = "";
 
 	String STAGE = "stage";

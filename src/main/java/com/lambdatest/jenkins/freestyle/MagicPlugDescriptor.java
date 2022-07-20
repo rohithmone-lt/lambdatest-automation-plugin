@@ -129,14 +129,35 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 
-	public ListBoxModel doFillDeviceNameItems(@QueryParameter String operatingSystem) {
+	public ListBoxModel doFillBrandNameItems(@QueryParameter String operatingSystem) {
 		ListBoxModel items = new ListBoxModel();
 		if (StringUtils.isBlank(operatingSystem)) {
+			items.add(Constant.DEFAULT_BRAND_NAME_VALUE, Constant.EMPTY);
+			return items;
+		}
+		System.out.println(operatingSystem);
+		Set<String> supportedBrands = AppiumCapabilityService.getBrandNames(operatingSystem);
+		if (!CollectionUtils.isEmpty(supportedBrands)) {
+			supportedBrands.forEach(br -> {
+				items.add(br, br);
+			});
+		}
+		return items;
+	}
+	
+	public ListBoxModel doFillDeviceNameItems(@QueryParameter String operatingSystem, @QueryParameter String brandName) {
+		ListBoxModel items = new ListBoxModel();
+		System.out.println(operatingSystem + "::" + brandName);
+		if (!StringUtils.isBlank(operatingSystem) && StringUtils.isBlank(brandName)) {
+			brandName = "Asus";
+			System.out.println("Asus added");
+		} else if (StringUtils.isBlank(operatingSystem) || StringUtils.isBlank(brandName)) {
 			items.add(Constant.DEFAULT_DEVICE_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
 		System.out.println(operatingSystem);
-		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(operatingSystem);
+		System.out.println(brandName);
+		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(operatingSystem, brandName);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
 			supportedDevices.forEach(br -> {
 				items.add(br, br);
