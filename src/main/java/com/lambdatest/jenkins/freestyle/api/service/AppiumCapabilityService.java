@@ -124,7 +124,7 @@ public class AppiumCapabilityService {
 		supportedDeviceVersions = new LinkedHashSet<String>();
 		AppiumVersionKey avk = new AppiumVersionKey(operatingSystem, deviceName);
 		if (allDeviceVersions.containsKey(avk)) {
-			logger.info("2. Supported Device Versions List Exists for " + operatingSystem + ":" + deviceName);
+			logger.info("Supported Device Versions List Exists for " + operatingSystem + ":" + deviceName);
 			allDeviceVersions.get(avk).forEach(dv -> {
 				supportedDeviceVersions.add(dv.getVersion());
 			});
