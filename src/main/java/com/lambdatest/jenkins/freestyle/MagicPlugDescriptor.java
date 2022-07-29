@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
@@ -16,6 +17,7 @@ import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.lambdatest.jenkins.credential.MagicPlugCredentialsImpl;
 import com.lambdatest.jenkins.freestyle.api.Constant;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
+import com.lambdatest.jenkins.freestyle.data.AppiumCapabilityRequest;
 import com.lambdatest.jenkins.freestyle.api.service.AppiumCapabilityService;
 
 import hudson.Extension;
@@ -27,6 +29,8 @@ import hudson.util.ListBoxModel;
 
 @Extension
 public class MagicPlugDescriptor extends BuildWrapperDescriptor {
+
+	private final static Logger logger = Logger.getLogger(AppiumCapabilityService.class.getName());
 
 	@Override
 	public boolean isApplicable(AbstractProject<?, ?> item) {
@@ -58,6 +62,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	 * @return ListBoxModel
 	 */
 	public ListBoxModel doFillOperatingSystemItems() {
+		logger.info("doFill Selenium OS triggered");
 		Map<String, String> supportedOS = CapabilityService.getOperatingSystems();
 		ListBoxModel items = new ListBoxModel();
 		items.add(Constant.DEFAULT_OPERATING_SYSTEM_VALUE, Constant.EMPTY);
@@ -121,6 +126,8 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 
 	public ListBoxModel doFillAppiumOperatingSystemItems() {
 		Map<String, String> appiumSupportedOS = AppiumCapabilityService.getAppiumOperatingSystems();
+		logger.info("OS triggered : " + appiumSupportedOS);
+		
 		ListBoxModel items = new ListBoxModel();
 		items.add(Constant.DEFAULT_OPERATING_SYSTEM_VALUE, Constant.EMPTY);
 		appiumSupportedOS.forEach((key, value) -> {
@@ -137,6 +144,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		}
 		System.out.println(operatingSystem);
 		Set<String> supportedBrands = AppiumCapabilityService.getBrandNames(operatingSystem);
+		logger.info("Brand Names triggered : " + supportedBrands);
 		if (!CollectionUtils.isEmpty(supportedBrands)) {
 			supportedBrands.forEach(br -> {
 				items.add(br, br);
@@ -158,6 +166,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		System.out.println(operatingSystem);
 		System.out.println(brandName);
 		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(operatingSystem, brandName);
+		logger.info("Device Names triggered : " + supportedDevices);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
 			supportedDevices.forEach(br -> {
 				items.add(br, br);
@@ -178,6 +187,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			return items;
 		}
 		Set<String> supportedDeviceVersions = AppiumCapabilityService.getDeviceVersions(operatingSystem, deviceName);
+		logger.info("Device Versions triggered : " + supportedDeviceVersions);
 		if (!CollectionUtils.isEmpty(supportedDeviceVersions)) {
 			supportedDeviceVersions.forEach(ver -> {
 				items.add(ver, ver);

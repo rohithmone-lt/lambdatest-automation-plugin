@@ -35,6 +35,7 @@ public class AppiumCapabilityService {
 
     public static Map<String, String> getAppiumOperatingSystems() {
 		try {
+			logger.info("getOS Triggered");
 			if (MapUtils.isEmpty(appiumSupportedOS)) {
 				appiumSupportedOS = new LinkedHashMap<>();
 				String jsonResponse = CapabilityService.sendGetRequest(Constant.APPIUM_OS_API_URL);
@@ -59,6 +60,7 @@ public class AppiumCapabilityService {
 
 	public static Set<String> getBrandNames(String operatingSystem) {
 		try {
+			// logger.info("getBrandNames Triggered");
 			if (allBrandNames.containsKey(operatingSystem)) {
 				logger.info("Supported Brand List Exists for " + operatingSystem);
 				return allBrandNames.get(operatingSystem);
@@ -72,6 +74,8 @@ public class AppiumCapabilityService {
             String jsonResponseOs = jsonObj.getJSONArray(operatingSystem).toString();
 			List<Devices> devices = objectMapper.readValue(jsonResponseOs, new TypeReference<List<Devices>>() {});
 			parseSupportedBrandsAndDevices(devices, operatingSystem);
+			// logger.info("allDeviceNames after parsing : " + allDeviceNames.size());
+			// logger.info("allDeviceVersions after parsing : " + allDeviceNames.size());
 		} catch (Exception e) {
 			logger.warning(e.getMessage());
 		}
@@ -121,6 +125,8 @@ public class AppiumCapabilityService {
 	}
 
     public static Set<String> getDeviceVersions(String operatingSystem, String deviceName) {
+		// logger.info("getDeviceVersions Triggered");
+		// logger.info("allDeviceVersions : " + allDeviceVersions.size());
 		supportedDeviceVersions = new LinkedHashSet<String>();
 		AppiumVersionKey avk = new AppiumVersionKey(operatingSystem, deviceName);
 		if (allDeviceVersions.containsKey(avk)) {
@@ -153,7 +159,7 @@ public class AppiumCapabilityService {
 		System.out.println(getAppiumOperatingSystems());
 		System.out.println(getBrandNames("android"));
 		System.out.println(getDeviceNames("android", "Asus"));
-		System.out.println(getDeviceVersions("android", "Zenfone 6"));
+		// System.out.println(getDeviceVersions("android", "Zenfone 6"));
 		System.out.println(allDeviceVersions);
 	}
     
