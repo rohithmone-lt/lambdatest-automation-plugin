@@ -2,21 +2,21 @@ package com.lambdatest.jenkins.freestyle.api.service;
 
 public class AppiumDeviceKey {
     
-    private String operatingSystem;
+    private String platformName;
 	private String brandName;
 
-	public AppiumDeviceKey(String operatingSystem, String brandName) {
+	public AppiumDeviceKey(String platformName, String brandName) {
 		super();
-		this.operatingSystem = operatingSystem;
+		this.platformName = platformName;
 		this.brandName= brandName;
 	}
 
-	public String getOperatingSystem() {
-		return operatingSystem;
+	public String getPlatformName() {
+		return platformName;
 	}
 
-	public void setOperatingSystem(String operatingSystem) {
-		this.operatingSystem = operatingSystem;
+	public void setPlatformName(String platformName) {
+		this.platformName = platformName;
 	}
 
 	public String getBrandName() {
@@ -32,7 +32,7 @@ public class AppiumDeviceKey {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((brandName == null) ? 0 : brandName.hashCode());
-		result = prime * result + ((operatingSystem == null) ? 0 : operatingSystem.hashCode());
+		result = prime * result + ((platformName == null) ? 0 : platformName.hashCode());
 		return result;
 	}
 
@@ -50,10 +50,10 @@ public class AppiumDeviceKey {
 				return false;
 		} else if (!brandName.equals(other.brandName))
 			return false;
-		if (operatingSystem == null) {
-			if (other.operatingSystem != null)
+		if (platformName == null) {
+			if (other.platformName != null)
 				return false;
-		} else if (!operatingSystem.equals(other.operatingSystem))
+		} else if (!platformName.equals(other.platformName))
 			return false;
 		return true;
 	}
@@ -61,8 +61,8 @@ public class AppiumDeviceKey {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{\noperatingSystem=");
-		builder.append(operatingSystem);
+		builder.append("{\nplatformName=");
+		builder.append(platformName);
 		builder.append(",\nbrandName=");
 		builder.append(brandName);
 		builder.append("\n}");

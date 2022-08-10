@@ -52,10 +52,9 @@
 		<f:entry title="Appium Tests">
 			<f:repeatable var="appiumCapabilityRequest" items="${instance.appiumCapabilityRequest}"  add="Add Appium Test Capability">
 				<table width="100%">
-					<f:entry title="Operating System" field="operatingSystem">
-						<f:select value="${appiumCapabilityRequest.operatingSystem}" />
+					<f:entry title="Platform Name" field="platformName">
+						<f:select value="${appiumCapabilityRequest.platformName}" />
 					</f:entry>
-					<f:textbox value="${appiumCapabilityRequest}"/>
 					<f:entry title="Brand Name" progress="Loading" field="brandName">
 						<f:select value="${appiumCapabilityRequest.brandName}" />
 					</f:entry>

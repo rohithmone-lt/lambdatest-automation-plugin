@@ -63,7 +63,7 @@ public class LambdaTestAppiumReportPublisher extends Recorder implements SimpleB
          */
         @Override
         public String getDisplayName() {
-            return Constant.LT_REPORT_DISPLAY_NAME;
+            return Constant.LT_APPIUM_REPORT_DISPLAY_NAME;
         }
     }
 

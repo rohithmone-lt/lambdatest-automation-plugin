@@ -2,21 +2,21 @@ package com.lambdatest.jenkins.freestyle.api.service;
 
 public class AppiumVersionKey {
     
-    private String operatingSystem;
+    private String platformName;
 	private String deviceName;
 
-	public AppiumVersionKey(String operatingSystem, String deviceName) {
+	public AppiumVersionKey(String platformName, String deviceName) {
 		super();
-		this.operatingSystem = operatingSystem;
+		this.platformName = platformName;
 		this.deviceName = deviceName;
 	}
 
-	public String getOperatingSystem() {
-		return operatingSystem;
+	public String getPlatformName() {
+		return platformName;
 	}
 
-	public void setOperatingSystem(String operatingSystem) {
-		this.operatingSystem = operatingSystem;
+	public void setPlatformName(String platformName) {
+		this.platformName = platformName;
 	}
 
 	public String getDeviceName() {
@@ -32,7 +32,7 @@ public class AppiumVersionKey {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((deviceName == null) ? 0 : deviceName.hashCode());
-		result = prime * result + ((operatingSystem == null) ? 0 : operatingSystem.hashCode());
+		result = prime * result + ((platformName == null) ? 0 : platformName.hashCode());
 		return result;
 	}
 
@@ -50,10 +50,10 @@ public class AppiumVersionKey {
 				return false;
 		} else if (!deviceName.equals(other.deviceName))
 			return false;
-		if (operatingSystem == null) {
-			if (other.operatingSystem != null)
+		if (platformName == null) {
+			if (other.platformName != null)
 				return false;
-		} else if (!operatingSystem.equals(other.operatingSystem))
+		} else if (!platformName.equals(other.platformName))
 			return false;
 		return true;
 	}
@@ -61,8 +61,8 @@ public class AppiumVersionKey {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{\noperatingSystem=");
-		builder.append(operatingSystem);
+		builder.append("{\nplatformName=");
+		builder.append(platformName);
 		builder.append(",\ndeviceName=");
 		builder.append(deviceName);
 		builder.append("\n}");

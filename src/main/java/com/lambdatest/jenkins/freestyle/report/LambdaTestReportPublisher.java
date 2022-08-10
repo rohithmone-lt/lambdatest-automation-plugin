@@ -48,6 +48,9 @@ public class LambdaTestReportPublisher extends Recorder implements SimpleBuildSt
         ReportBuildAction ltReportAction = new ReportBuildAction(build, username, accessKey, buildName);
         ltReportAction.generateLambdaTestReport();
         build.addAction(ltReportAction);
+        // AppiumReportBuildAction ltReportAction2 = new AppiumReportBuildAction(build, username, accessKey, buildName);
+        // ltReportAction2.generateLambdaTestAppiumReport();
+        // build.addAction(ltReportAction2);
     }
 
     @Extension

@@ -5,6 +5,7 @@ import jenkins.model.Jenkins;
 public interface Constant {
 
 	String LT_REPORT_DISPLAY_NAME = "LambdaTest Report";
+	String LT_APPIUM_REPORT_DISPLAY_NAME = "LambdaTest Appium Report";
 	String LT_REPORT_URL = "reportLambdaTest";
 	String LT_ICON_FILE_NAME = Jenkins.RESOURCE_PATH + "/plugin/lambdatest-automation/images/logo.png";
 
@@ -20,18 +21,20 @@ public interface Constant {
 	String LT_BUILD_NUMBER = "LT_BUILD_NUMBER";
 	String LT_USERNAME = "LT_USERNAME";
 	String LT_ACCESS_KEY = "LT_ACCESS_KEY";
+	String LT_PLATFORM_NAME = "LT_PLATFORM_NAME";
 	String LT_BRANDS = "LT_BRANDS";
 	String LT_DEVICES = "LT_DEVICES";
 	String LT_BRAND_NAME = "LT_BRAND_NAME";
 	String LT_DEVICE_NAME = "LT_DEVICE_NAME";
 	String LT_DEVICE_VERSION = "LT_DEVICE_VERSION";
-	String LT_APP_URL = "LT_DEVICE_VERSION";
+	String LT_APP_URL = "LT_APP_URL";
 
 	String OPERATING_SYSTEM = "operatingSystem";
 	String BROWSER_NAME = "browserName";
 	String BROWSER_VERSION = "browserVersion";
 	String RESOLUTION = "resolution";
 
+	String PLATFORM_NAME = "platformName";
 	String BRAND_NAME = "brandName";
 	String DEVICE_NAME = "deviceName";
 	String DEVICE_VERSION = "deviceVersion";
@@ -52,7 +55,7 @@ public interface Constant {
 	interface Stage {
 		String APP_URL = "https://stage-automation.lambdatest.com";
 		String HUB_URL = "@stage-hub.lambdatest.com/wd/hub";
-		String APPIUM_HUB_URL = "@prestage-mobile-hub.lambdatest.com/wd/hub";
+		String APPIUM_HUB_URL = "@stage-mobile-hub.lambdatest.com/wd/hub";
 	}
 
 	interface Beta {
@@ -70,10 +73,11 @@ public interface Constant {
 	String DEFAULT_BROWSER_VERSION_VALUE = "Select Browser Version";
 	String DEFAULT_RESOLUTION_VALUE = "Select Screen Resolution";
 
+	String DEFAULT_PLATFORM_NAME_VALUE = "Select Platform Name";
 	String DEFAULT_BRAND_NAME_VALUE = "Select Brand Name";
 	String DEFAULT_DEVICE_NAME_VALUE = "Select Device Name";
 	String DEFAULT_DEVICE_VERSION_VALUE = "Select Device Version";
-	String DEFAULT_APP_URL = "";
+	String DEFAULT_APP_URL = "Enter App Url";
 
 	String STAGE = "stage";
 	String DEV = "dev";

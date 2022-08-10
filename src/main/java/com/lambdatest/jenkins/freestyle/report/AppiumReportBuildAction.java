@@ -64,7 +64,7 @@ public class AppiumReportBuildAction extends AbstractReportBuildAction {
 
                         lambdaTestBuildDeviceUrl = "https://appautomation.lambdatest.com/test?buildid=" + build_id;
 
-                        logger.info("lambdaTestBuildBrowserUrl : " + lambdaTestBuildDeviceUrl);
+                        logger.info("lambdaTestBuildDeviceUrl : " + lambdaTestBuildDeviceUrl);
                         URL sessionUrl = new URL(Constant.AppiumReport.SESSION_INFO_URL + "?limit=100&build_id=" + build_id);
                         URLConnection sessionUrlConnection = sessionUrl.openConnection();
                         sessionUrlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
@@ -85,22 +85,23 @@ public class AppiumReportBuildAction extends AbstractReportBuildAction {
                         JSONArray array = new JSONArray();
                         while (sessionDataIterator.hasNext()) {
                             JsonNode sessionDetailNode = sessionDataIterator.next();
-                            String testUrl = "https://appautomation.lambdatest.com/test?testID=" + sessionDetailNode.get("testId").toString().replaceAll("\"", "") + "&buildid=" + build_id;
+                            logger.info("sessiondetailnode : " + sessionDataNode.toString());
+                            String testUrl = "https://appautomation.lambdatest.com/test?testID=" + sessionDetailNode.get("test_id").toString().replaceAll("\"", "") + "&buildid=" + build_id;
                             logger.info("testUrl : " + testUrl);
                             JSONObject resultJSON = new JSONObject();
                             resultJSON.put("url",testUrl);
-                            resultJSON.put("status",sessionDetailNode.get("test_status").toString().replaceAll("\"", ""));
-                            resultJSON.put("device",sessionDetailNode.get("device_name").toString().replaceAll("\"", ""));
-                            resultJSON.put("deviceVersion",sessionDetailNode.get("os_version").toString().replaceAll("\"", ""));
-                            resultJSON.put("OS",sessionDetailNode.get("device_os").toString().replaceAll("\"", ""));
-                            resultJSON.put("name",sessionDetailNode.get("test_name").toString().replaceAll("\"", ""));
-                            resultJSON.put("testId",sessionDetailNode.get("testId").toString().replaceAll("\"", ""));
+                            resultJSON.put("status",sessionDetailNode.get("status_ind").toString().replaceAll("\"", ""));
+                            resultJSON.put("deviceVersion",sessionDetailNode.get("version").toString().replaceAll("\"", ""));
+                            resultJSON.put("OS",sessionDetailNode.get("platform").toString().replaceAll("\"", ""));
+                            resultJSON.put("name",sessionDetailNode.get("name").toString().replaceAll("\"", ""));
+                            resultJSON.put("testDuration",sessionDetailNode.get("duration").toString().replaceAll("\"", ""));
+                            resultJSON.put("createdAtReadable",sessionDetailNode.get("create_timestamp").toString().replaceAll("\"", ""));
                             array.put(resultJSON);
                         }
                         for (int i = 0; i < array.length(); i++) {
                             result.add(array.getJSONObject(i));
                         }
-                        logger.info(result.toString());
+                        logger.info("result : " + result.toString());
                         break;
                     }
                 }

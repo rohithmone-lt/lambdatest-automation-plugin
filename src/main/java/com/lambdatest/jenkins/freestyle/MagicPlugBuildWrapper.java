@@ -173,9 +173,10 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		if (!CollectionUtils.isEmpty(seleniumCapabilityRequest)) {
 			this.gridURL = CapabilityService.buildHubURL(this.username, this.accessToken.getPlainText(),"production");
 		} else if (!CollectionUtils.isEmpty(appiumCapabilityRequest)) {
+			logger.info("appiumCR : " + appiumCapabilityRequest);
 			this.gridURL = AppiumCapabilityService.appiumBuildHubURL(this.username, this.accessToken.getPlainText(),"production");
 		}
-		logger.info(this.gridURL);
+		logger.info("grid URL : " + this.gridURL);
 		return new MagicPlugEnvironment(build);
 	}
 
@@ -221,9 +222,9 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 				env.put(Constant.LT_BROWSER_VERSION, seleniumCapability.getString(Constant.BROWSER_VERSION));
 				env.put(Constant.LT_RESOLUTION, seleniumCapability.getString(Constant.RESOLUTION));
 			}
-			if (!CollectionUtils.isEmpty(appiumCapabilityRequest) && appiumCapabilityRequest.size() == 1) {
+			if (!CollectionUtils.isEmpty(appiumCapabilityRequest)) {
 				JSONObject appiumCapability = appiumCapabilityRequest.get(0);
-				env.put(Constant.LT_PLATFORM, appiumCapability.getString(Constant.OPERATING_SYSTEM));
+				env.put(Constant.LT_PLATFORM_NAME, appiumCapability.getString(Constant.PLATFORM_NAME));
 				env.put(Constant.LT_BRAND_NAME, appiumCapability.getString(Constant.BRAND_NAME));
 				env.put(Constant.LT_DEVICE_NAME, appiumCapability.getString(Constant.DEVICE_NAME));
 				env.put(Constant.LT_DEVICE_VERSION, appiumCapability.getString(Constant.DEVICE_VERSION));

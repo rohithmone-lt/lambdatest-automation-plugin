@@ -6,25 +6,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "operatingSystem",
+    "platformName",
+    "brandName",
     "device"
 })
 public class AppiumCapabilityRequest {
     
-    @JsonProperty("operatingSystem")
-    private String operatingSystem;
+    @JsonProperty("platformName")
+    private String platformName;
+    @JsonProperty("brandName")
+    private String brandName;
     @JsonProperty("device")
     private String device;
 
-    @JsonProperty("operatingSystem")
-    public String getOperatingSystem() {
-        return operatingSystem;
+    @JsonProperty("platformName")
+    public String getPlatformName() {
+        return platformName;
     }
 
-    @JsonProperty("operatingSystem")
-    public void setOperatingSystem(String operatingSystem) {
-        this.operatingSystem = operatingSystem;
+    @JsonProperty("platformName")
+    public void setPlatformName(String platformName) {
+        this.platformName = platformName;
     }
+
+    @JsonProperty("brandName")
+    public String getBrandName() {
+        return brandName;
+    }
+
+    @JsonProperty("brandName")
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }    
 
     @JsonProperty("device")
     public String getDevice() {
@@ -39,8 +52,8 @@ public class AppiumCapabilityRequest {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{operatingSystem=");
-		builder.append(operatingSystem);
+		builder.append("{platformName=");
+		builder.append(platformName);
 		builder.append(", device=");
 		builder.append(device);
 		builder.append("}");

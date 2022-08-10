@@ -124,26 +124,25 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 
-	public ListBoxModel doFillAppiumOperatingSystemItems() {
-		Map<String, String> appiumSupportedOS = AppiumCapabilityService.getAppiumOperatingSystems();
-		logger.info("OS triggered : " + appiumSupportedOS);
-		
+	public ListBoxModel doFillPlatformNameItems() {
+		Map<String, String> supportedPlatforms = AppiumCapabilityService.getPlatformNames();
+		logger.info("OS triggered : " + supportedPlatforms);
 		ListBoxModel items = new ListBoxModel();
-		items.add(Constant.DEFAULT_OPERATING_SYSTEM_VALUE, Constant.EMPTY);
-		appiumSupportedOS.forEach((key, value) -> {
+		items.add(Constant.DEFAULT_PLATFORM_NAME_VALUE, Constant.EMPTY);
+		supportedPlatforms.forEach((key, value) -> {
 			items.add(value, key);
 		});
 		return items;
 	}
 
-	public ListBoxModel doFillBrandNameItems(@QueryParameter String operatingSystem) {
+	public ListBoxModel doFillBrandNameItems(@QueryParameter String platformName) {
 		ListBoxModel items = new ListBoxModel();
-		if (StringUtils.isBlank(operatingSystem)) {
+		if (StringUtils.isBlank(platformName)) {
 			items.add(Constant.DEFAULT_BRAND_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(operatingSystem);
-		Set<String> supportedBrands = AppiumCapabilityService.getBrandNames(operatingSystem);
+		System.out.println(platformName);
+		Set<String> supportedBrands = AppiumCapabilityService.getBrandNames(platformName);
 		logger.info("Brand Names triggered : " + supportedBrands);
 		if (!CollectionUtils.isEmpty(supportedBrands)) {
 			supportedBrands.forEach(br -> {
@@ -153,19 +152,19 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 	
-	public ListBoxModel doFillDeviceNameItems(@QueryParameter String operatingSystem, @QueryParameter String brandName) {
+	public ListBoxModel doFillDeviceNameItems(@QueryParameter String platformName, @QueryParameter String brandName) {
 		ListBoxModel items = new ListBoxModel();
-		System.out.println(operatingSystem + "::" + brandName);
-		if (!StringUtils.isBlank(operatingSystem) && StringUtils.isBlank(brandName)) {
+		System.out.println(platformName + "::" + brandName);
+		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(brandName)) {
 			brandName = "Asus";
 			System.out.println("Asus added");
-		} else if (StringUtils.isBlank(operatingSystem) || StringUtils.isBlank(brandName)) {
+		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(brandName)) {
 			items.add(Constant.DEFAULT_DEVICE_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(operatingSystem);
+		System.out.println(platformName);
 		System.out.println(brandName);
-		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(operatingSystem, brandName);
+		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(platformName, brandName);
 		logger.info("Device Names triggered : " + supportedDevices);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
 			supportedDevices.forEach(br -> {
@@ -175,18 +174,18 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 
-	public ListBoxModel doFillDeviceVersionItems(@QueryParameter String operatingSystem,
+	public ListBoxModel doFillDeviceVersionItems(@QueryParameter String platformName,
 			@QueryParameter String deviceName) {
 		ListBoxModel items = new ListBoxModel();
-		System.out.println(operatingSystem + "::" + deviceName);
-		if (!StringUtils.isBlank(operatingSystem) && StringUtils.isBlank(deviceName)) {
+		System.out.println(platformName + "::" + deviceName);
+		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(deviceName)) {
 			deviceName = "Zenfone 6";
 			System.out.println("Zenfone 6 added");
-		} else if (StringUtils.isBlank(operatingSystem) || StringUtils.isBlank(deviceName)) {
+		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(deviceName)) {
 			items.add(Constant.DEFAULT_DEVICE_VERSION_VALUE, Constant.EMPTY);
 			return items;
 		}
-		Set<String> supportedDeviceVersions = AppiumCapabilityService.getDeviceVersions(operatingSystem, deviceName);
+		Set<String> supportedDeviceVersions = AppiumCapabilityService.getDeviceVersions(platformName, deviceName);
 		logger.info("Device Versions triggered : " + supportedDeviceVersions);
 		if (!CollectionUtils.isEmpty(supportedDeviceVersions)) {
 			supportedDeviceVersions.forEach(ver -> {
@@ -196,8 +195,10 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 
-	public String doFillAppUrl() {
-		return Constant.DEFAULT_APP_URL;
+	public ListBoxModel doFillAppUrl() {
+		ListBoxModel items = new ListBoxModel();
+		items.add(Constant.DEFAULT_APP_URL, Constant.EMPTY);
+		return items;
 	}
 	
 	public ListBoxModel doFillCredentialsIdItems(@QueryParameter String credentialsId) {
