@@ -105,7 +105,7 @@ public class ReportBuildAction extends AbstractReportBuildAction {
                         for (int i = 0; i < array.length(); i++) {
                             result.add(array.getJSONObject(i));
                         }
-                        logger.info("jsonObject caps : " + result.toString());
+                        logger.info(result.toString());
                         break;
                     }
                 }

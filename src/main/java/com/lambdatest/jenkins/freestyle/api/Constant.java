@@ -55,7 +55,7 @@ public interface Constant {
 	interface Stage {
 		String APP_URL = "https://stage-automation.lambdatest.com";
 		String HUB_URL = "@stage-hub.lambdatest.com/wd/hub";
-		String APP_AUTOMATION_HUB_URL = "@stage-mobile-hub.lambdatest.com/wd/hub";
+		String APP_AUTOMATION_HUB_URL = "@stage-mobile-hub.lambdatestinternal.com/wd/hub";
 	}
 
 	interface Beta {

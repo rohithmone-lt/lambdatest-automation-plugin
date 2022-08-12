@@ -62,7 +62,6 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	 * @return ListBoxModel
 	 */
 	public ListBoxModel doFillOperatingSystemItems() {
-		logger.info("doFill Selenium OS triggered");
 		Map<String, String> supportedOS = CapabilityService.getOperatingSystems();
 		ListBoxModel items = new ListBoxModel();
 		items.add(Constant.DEFAULT_OPERATING_SYSTEM_VALUE, Constant.EMPTY);

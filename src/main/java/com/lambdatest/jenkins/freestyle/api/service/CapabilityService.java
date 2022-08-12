@@ -237,7 +237,6 @@ public class CapabilityService {
 		}
 		return result.toString();
 	}
-
 	public static String sendPostRequest(String url, Object request) throws ClientProtocolException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(url);
@@ -250,6 +249,7 @@ public class CapabilityService {
 		try {
 			ObjectMapper Obj = new ObjectMapper();
 			jsonStr = Obj.writeValueAsString(request);
+			logger.info(jsonStr);
 			StringEntity entity = new StringEntity(jsonStr);
 			httpPost.setEntity(entity);
 
