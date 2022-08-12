@@ -1,11 +1,11 @@
 package com.lambdatest.jenkins.freestyle.api.service;
 
-public class AppiumVersionKey {
+public class AppAutomationVersionKey {
     
     private String platformName;
 	private String deviceName;
 
-	public AppiumVersionKey(String platformName, String deviceName) {
+	public AppAutomationVersionKey(String platformName, String deviceName) {
 		super();
 		this.platformName = platformName;
 		this.deviceName = deviceName;
@@ -44,7 +44,7 @@ public class AppiumVersionKey {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AppiumVersionKey other = (AppiumVersionKey) obj;
+		AppAutomationVersionKey other = (AppAutomationVersionKey) obj;
 		if (deviceName == null) {
 			if (other.deviceName != null)
 				return false;

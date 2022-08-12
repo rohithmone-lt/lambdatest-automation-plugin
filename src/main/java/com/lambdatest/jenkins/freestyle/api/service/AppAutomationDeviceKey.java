@@ -1,11 +1,11 @@
 package com.lambdatest.jenkins.freestyle.api.service;
 
-public class AppiumDeviceKey {
+public class AppAutomationDeviceKey {
     
     private String platformName;
 	private String brandName;
 
-	public AppiumDeviceKey(String platformName, String brandName) {
+	public AppAutomationDeviceKey(String platformName, String brandName) {
 		super();
 		this.platformName = platformName;
 		this.brandName= brandName;
@@ -44,7 +44,7 @@ public class AppiumDeviceKey {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AppiumDeviceKey other = (AppiumDeviceKey) obj;
+		AppAutomationDeviceKey other = (AppAutomationDeviceKey) obj;
 		if (brandName == null) {
 			if (other.brandName != null)
 				return false;

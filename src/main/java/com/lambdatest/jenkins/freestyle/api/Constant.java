@@ -5,7 +5,7 @@ import jenkins.model.Jenkins;
 public interface Constant {
 
 	String LT_REPORT_DISPLAY_NAME = "LambdaTest Report";
-	String LT_APPIUM_REPORT_DISPLAY_NAME = "LambdaTest Appium Report";
+	String LT_APP_AUTOMATION_REPORT_DISPLAY_NAME = "LambdaTest App Automation Report";
 	String LT_REPORT_URL = "reportLambdaTest";
 	String LT_ICON_FILE_NAME = Jenkins.RESOURCE_PATH + "/plugin/lambdatest-automation/images/logo.png";
 
@@ -47,15 +47,15 @@ public interface Constant {
 	String APP_URL = "https://automation.lambdatest.com";
 	String HUB_URL = "@hub.lambdatest.com/wd/hub";
 
-	String APPIUM_OS_API_URL = "https://api.lambdatest.com/api/v1/capability?grid=appium";
+	String APP_AUTOMATION_OS_API_URL = "https://api.lambdatest.com/api/v1/capability?grid=appium";
 	String DEVICE_API_URL = "https://mobile-api.lambdatest.com/mobile-automation/api/v1/capability/generator";
-	String APPIUM_APP_URL = "https://appautomation.lambdatest.com";
-	String APPIUM_HUB_URL = "@mobile-hub.lambdatest.com/wd/hub";
+	String APP_AUTOMATION_APP_URL = "https://appautomation.lambdatest.com";
+	String APP_AUTOMATION_HUB_URL = "@mobile-hub.lambdatest.com/wd/hub";
 
 	interface Stage {
 		String APP_URL = "https://stage-automation.lambdatest.com";
 		String HUB_URL = "@stage-hub.lambdatest.com/wd/hub";
-		String APPIUM_HUB_URL = "@stage-mobile-hub.lambdatest.com/wd/hub";
+		String APP_AUTOMATION_HUB_URL = "@stage-mobile-hub.lambdatest.com/wd/hub";
 	}
 
 	interface Beta {
@@ -138,7 +138,7 @@ public interface Constant {
 		public static final String SESSION_INFO_URL = "https://api.lambdatest.com/automation/api/v1/sessions";
 	}
 
-	interface AppiumReport {
+	interface AppAutomationReport {
 		public static final String NAME = "name";
 		public static final String DEVICE = "device";
 		public static final String OS = "os";

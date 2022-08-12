@@ -21,26 +21,26 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class AppiumReportBuildAction extends AbstractReportBuildAction {
-    private final static Logger logger = Logger.getLogger(AppiumReportBuildAction.class.getName());
+public class AppAutomationReportBuildAction extends AbstractAppAutomationReportBuildAction {
+    private final static Logger logger = Logger.getLogger(AppAutomationReportBuildAction.class.getName());
     private String lambdaTestBuildDeviceUrl;
     private String authString;
     private String buildName;
     List<JSONObject> result = new ArrayList<JSONObject>();
 
-    public AppiumReportBuildAction(final Run<?, ?> build, String name,String password, String buildName) {
+    public AppAutomationReportBuildAction(final Run<?, ?> build, String name,String password, String buildName) {
         super();
         setBuild(build);
         this.authString =  name + ":" + password;
         this.buildName = buildName;
     }
-    public void generateLambdaTestAppiumReport() {
+    public void generateLambdaTestAppAutomationReport() {
         logger.info("authString : " + authString);
         byte[] authEncBytes = Base64.getEncoder().encode(authString.getBytes());
         String authStringEnc = new String(authEncBytes);
-        logger.info("in generate generateLambdaTestAppiumReport function");
+        logger.info("in generate generateLambdaTestAppAutomationReport function");
         try {
-            URL buildUrl = new URL(Constant.AppiumReport.BUILD_INFO_URL);
+            URL buildUrl = new URL(Constant.AppAutomationReport.BUILD_INFO_URL);
             URLConnection buildUrlConnection = buildUrl.openConnection();
             buildUrlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
             InputStream is = buildUrlConnection.getInputStream();
@@ -65,7 +65,7 @@ public class AppiumReportBuildAction extends AbstractReportBuildAction {
                         lambdaTestBuildDeviceUrl = "https://appautomation.lambdatest.com/test?buildid=" + build_id;
 
                         logger.info("lambdaTestBuildDeviceUrl : " + lambdaTestBuildDeviceUrl);
-                        URL sessionUrl = new URL(Constant.AppiumReport.SESSION_INFO_URL + "?limit=100&build_id=" + build_id);
+                        URL sessionUrl = new URL(Constant.AppAutomationReport.SESSION_INFO_URL + "?limit=100&build_id=" + build_id);
                         URLConnection sessionUrlConnection = sessionUrl.openConnection();
                         sessionUrlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
                         is = sessionUrlConnection.getInputStream();

@@ -17,8 +17,8 @@ import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.lambdatest.jenkins.credential.MagicPlugCredentialsImpl;
 import com.lambdatest.jenkins.freestyle.api.Constant;
 import com.lambdatest.jenkins.freestyle.api.service.CapabilityService;
-import com.lambdatest.jenkins.freestyle.data.AppiumCapabilityRequest;
-import com.lambdatest.jenkins.freestyle.api.service.AppiumCapabilityService;
+import com.lambdatest.jenkins.freestyle.data.AppAutomationCapabilityRequest;
+import com.lambdatest.jenkins.freestyle.api.service.AppAutomationCapabilityService;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
@@ -30,7 +30,7 @@ import hudson.util.ListBoxModel;
 @Extension
 public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 
-	private final static Logger logger = Logger.getLogger(AppiumCapabilityService.class.getName());
+	private final static Logger logger = Logger.getLogger(AppAutomationCapabilityService.class.getName());
 
 	@Override
 	public boolean isApplicable(AbstractProject<?, ?> item) {
@@ -125,7 +125,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	}
 
 	public ListBoxModel doFillPlatformNameItems() {
-		Map<String, String> supportedPlatforms = AppiumCapabilityService.getPlatformNames();
+		Map<String, String> supportedPlatforms = AppAutomationCapabilityService.getPlatformNames();
 		logger.info("OS triggered : " + supportedPlatforms);
 		ListBoxModel items = new ListBoxModel();
 		items.add(Constant.DEFAULT_PLATFORM_NAME_VALUE, Constant.EMPTY);
@@ -142,7 +142,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			return items;
 		}
 		System.out.println(platformName);
-		Set<String> supportedBrands = AppiumCapabilityService.getBrandNames(platformName);
+		Set<String> supportedBrands = AppAutomationCapabilityService.getBrandNames(platformName);
 		logger.info("Brand Names triggered : " + supportedBrands);
 		if (!CollectionUtils.isEmpty(supportedBrands)) {
 			supportedBrands.forEach(br -> {
@@ -164,7 +164,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		}
 		System.out.println(platformName);
 		System.out.println(brandName);
-		Set<String> supportedDevices = AppiumCapabilityService.getDeviceNames(platformName, brandName);
+		Set<String> supportedDevices = AppAutomationCapabilityService.getDeviceNames(platformName, brandName);
 		logger.info("Device Names triggered : " + supportedDevices);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
 			supportedDevices.forEach(br -> {
@@ -185,7 +185,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_DEVICE_VERSION_VALUE, Constant.EMPTY);
 			return items;
 		}
-		Set<String> supportedDeviceVersions = AppiumCapabilityService.getDeviceVersions(platformName, deviceName);
+		Set<String> supportedDeviceVersions = AppAutomationCapabilityService.getDeviceVersions(platformName, deviceName);
 		logger.info("Device Versions triggered : " + supportedDeviceVersions);
 		if (!CollectionUtils.isEmpty(supportedDeviceVersions)) {
 			supportedDeviceVersions.forEach(ver -> {

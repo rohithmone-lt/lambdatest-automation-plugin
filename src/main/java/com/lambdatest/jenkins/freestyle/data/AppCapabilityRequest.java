@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "appiumCapabilityRequest"
+    "appAutomationCapabilityRequest"
 })
 public class AppCapabilityRequest {
     
-    @JsonProperty("appiumCapabilityRequest")
-    private List<AppiumCapabilityRequest> appiumCapabilityRequest = null;
+    @JsonProperty("appAutomationCapabilityRequest")
+    private List<AppAutomationCapabilityRequest> appAutomationCapabilityRequest = null;
 
-    @JsonProperty("appiumCapabilityRequest")
-    public List<AppiumCapabilityRequest> getAppiumCapabilityRequest() {
-        return appiumCapabilityRequest;
+    @JsonProperty("appAutomationCapabilityRequest")
+    public List<AppAutomationCapabilityRequest> getAppAutomationCapabilityRequest() {
+        return appAutomationCapabilityRequest;
     }
 
-    @JsonProperty("appiumCapabilityRequest")
-    public void setAppiumCapabilityRequest(List<AppiumCapabilityRequest> appiumCapabilityRequest) {
-        this.appiumCapabilityRequest = appiumCapabilityRequest;
+    @JsonProperty("appAutomationCapabilityRequest")
+    public void setAppAutomationCapabilityRequest(List<AppAutomationCapabilityRequest> appAutomationCapabilityRequest) {
+        this.appAutomationCapabilityRequest = appAutomationCapabilityRequest;
     }
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{appiumCapabilityRequest=");
-		builder.append(appiumCapabilityRequest);
+		builder.append("{appAutomationCapabilityRequest=");
+		builder.append(appAutomationCapabilityRequest);
 		builder.append("}");
 		return builder.toString();
 	}

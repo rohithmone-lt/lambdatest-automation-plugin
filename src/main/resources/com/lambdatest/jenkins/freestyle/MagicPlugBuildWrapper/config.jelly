@@ -49,27 +49,27 @@
 				</table>
 			</f:repeatable>
 		</f:entry>
-		<f:entry title="Appium Tests">
-			<f:repeatable var="appiumCapabilityRequest" items="${instance.appiumCapabilityRequest}"  add="Add Appium Test Capability">
+		<f:entry title="Real Device App Automation Tests">
+			<f:repeatable var="appAutomationCapabilityRequest" items="${instance.appAutomationCapabilityRequest}"  add="Add App Automation Test Capability">
 				<table width="100%">
 					<f:entry title="Platform Name" field="platformName">
-						<f:select value="${appiumCapabilityRequest.platformName}" />
+						<f:select value="${appAutomationCapabilityRequest.platformName}" />
 					</f:entry>
 					<f:entry title="Brand Name" progress="Loading" field="brandName">
-						<f:select value="${appiumCapabilityRequest.brandName}" />
+						<f:select value="${appAutomationCapabilityRequest.brandName}" />
 					</f:entry>
 					<f:entry title="Device Name" progress="Loading" field="deviceName">
-						<f:select value="${appiumCapabilityRequest.deviceName}" />
+						<f:select value="${appAutomationCapabilityRequest.deviceName}" />
 					</f:entry>
 					<f:entry title="Device Version" progress="Loading" field="deviceVersion">
-						<f:select value="${appiumCapabilityRequest.deviceVersion}"/>
+						<f:select value="${appAutomationCapabilityRequest.deviceVersion}"/>
 					</f:entry>
 					<f:entry title="App Url" field="appUrl">
-						<f:textbox value="${appiumCapabilityRequest.appUrl}"/>
+						<f:textbox value="${appAutomationCapabilityRequest.appUrl}"/>
 					</f:entry>
 					<f:entry title="">
 						<div align="right">
-							<f:repeatableDeleteButton value="Delete Appium Test" />
+							<f:repeatableDeleteButton value="Delete Real Device App Automation Test" />
 						</div>
 					</f:entry>
 				</table>

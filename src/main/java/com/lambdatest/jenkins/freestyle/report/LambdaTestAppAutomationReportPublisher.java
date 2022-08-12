@@ -20,12 +20,12 @@ import java.util.logging.Logger;
 
 import com.lambdatest.jenkins.freestyle.api.Constant;
 
-public class LambdaTestAppiumReportPublisher extends Recorder implements SimpleBuildStep {
+public class LambdaTestAppAutomationReportPublisher extends Recorder implements SimpleBuildStep {
     
-    private final static Logger logger = Logger.getLogger(LambdaTestAppiumReportPublisher.class.getName());
+    private final static Logger logger = Logger.getLogger(LambdaTestAppAutomationReportPublisher.class.getName());
 
     @DataBoundConstructor
-    public LambdaTestAppiumReportPublisher() {
+    public LambdaTestAppAutomationReportPublisher() {
     }
 
     public BuildStepMonitor getRequiredMonitorService() {
@@ -39,12 +39,12 @@ public class LambdaTestAppiumReportPublisher extends Recorder implements SimpleB
         final String accessKey = parentEnvs.get(Constant.LT_ACCESS_KEY);
         final String buildName = parentEnvs.get(Constant.LT_BUILD_NAME);
 
-        logger.info("Generating LambdaTest Appium Report");
+        logger.info("Generating LambdaTest App Automation Report");
         logger.info("username : " + username);
         logger.info("accessKey : " + accessKey);
         logger.info("buildName : " + buildName);
-        AppiumReportBuildAction ltReportAction = new AppiumReportBuildAction(build, username, accessKey, buildName);
-        ltReportAction.generateLambdaTestAppiumReport();
+        AppAutomationReportBuildAction ltReportAction = new AppAutomationReportBuildAction(build, username, accessKey, buildName);
+        ltReportAction.generateLambdaTestAppAutomationReport();
         build.addAction(ltReportAction);
     }
 
@@ -63,7 +63,7 @@ public class LambdaTestAppiumReportPublisher extends Recorder implements SimpleB
          */
         @Override
         public String getDisplayName() {
-            return Constant.LT_APPIUM_REPORT_DISPLAY_NAME;
+            return Constant.LT_APP_AUTOMATION_REPORT_DISPLAY_NAME;
         }
     }
 

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "brandName",
     "device"
 })
-public class AppiumCapabilityRequest {
+public class AppAutomationCapabilityRequest {
     
     @JsonProperty("platformName")
     private String platformName;
