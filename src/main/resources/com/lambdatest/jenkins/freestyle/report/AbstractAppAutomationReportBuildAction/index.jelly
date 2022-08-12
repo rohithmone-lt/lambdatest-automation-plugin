@@ -97,7 +97,7 @@
                         <ul class="bullet-points">
                             <li class="bullet-item">You have set valid LambdaTest credentials via LambdaTest Plugin.</li>
                             <li class="bullet-item">You are using ‘LT_BUILD_NAME’ environment variable to set Build name <code>capabilities[‘build’]</code> in test cases.</li>
-                            <li class="bullet-item">Refer to the <a href="https://www.lambdatest.com/support/docs/jenkins-with-lambdatest/" target="_blank"> App Automate Jenkins documentation</a>
+                            <li class="bullet-item">Refer to the <a href="https://www.lambdatest.com/support/docs/jenkins-with-lambdatest/" target="_blank"> App Automation Jenkins documentation</a>
                             for more details or else visit <a href="https://appautomation.lambdatest.com/" target="_blank"> LambdaTest App Automation Dashboard</a> to see test results.</li>
                         </ul>
                     </div>

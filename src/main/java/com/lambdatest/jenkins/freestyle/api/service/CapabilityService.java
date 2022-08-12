@@ -61,7 +61,6 @@ public class CapabilityService {
 		}
 		return CapabilityService.supportedOS;
 	}
-	
 	private static void parseSupportedOsAndResolution(OSList osList) {
 		if (osList != null && osList.getOs() != null) {
 			osList.getOs().forEach(os -> {
@@ -237,6 +236,7 @@ public class CapabilityService {
 		}
 		return result.toString();
 	}
+	
 	public static String sendPostRequest(String url, Object request) throws ClientProtocolException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(url);
