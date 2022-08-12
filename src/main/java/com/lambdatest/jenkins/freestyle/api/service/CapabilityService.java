@@ -277,4 +277,4 @@ public class CapabilityService {
 		System.out.println(allBrowserVersions);
 	}
 
-} 
+}
