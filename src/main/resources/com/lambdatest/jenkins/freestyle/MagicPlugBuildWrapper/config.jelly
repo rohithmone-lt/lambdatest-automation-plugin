@@ -64,8 +64,8 @@
 					<f:entry title="Device Version" progress="Loading" field="deviceVersion">
 						<f:select value="${appAutomationCapabilityRequest.deviceVersion}"/>
 					</f:entry>
-					<f:entry title="App Url" field="appUrl">
-						<f:textbox value="${appAutomationCapabilityRequest.appUrl}"/>
+					<f:entry title="App Id" field="appId">
+						<f:textbox value="${appAutomationCapabilityRequest.appId}"/>
 					</f:entry>
 					<f:entry title="">
 						<div align="right">

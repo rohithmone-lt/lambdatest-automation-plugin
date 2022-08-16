@@ -38,7 +38,7 @@ public interface Constant {
 	String BRAND_NAME = "brandName";
 	String DEVICE_NAME = "deviceName";
 	String DEVICE_VERSION = "deviceVersion";
-	String APP_ID = "appUrl"; 
+	String APP_ID = "appId"; 
 
 	String OS_API_URL = "https://api.lambdatest.com/api/v1/capability?format=array";
 	String BROWSER_API_URL = "https://api.lambdatest.com/api/v1/capability?format=array&os=";

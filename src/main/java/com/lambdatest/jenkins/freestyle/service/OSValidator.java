@@ -1,26 +1,29 @@
 package com.lambdatest.jenkins.freestyle.service;
 
+import java.util.logging.Logger;
+
 public class OSValidator {
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
+	private static final Logger logger = Logger.getLogger(OSValidator.class.getName());
 
 	public static void main(String[] args) {
-		System.out.println(OS);
+		logger.info(OS);
 		if (isWindows()) {
-			System.out.println("This is Windows");
+			logger.info("This is Windows");
 		} else if (isMac()) {
-			System.out.println("This is Mac");
+			logger.info("This is Mac");
 		} else if (isUnix()) {
-			System.out.println("This is Unix or Linux");
+			logger.info("This is Unix or Linux");
 		} else if (isSolaris()) {
-			System.out.println("This is Solaris");
+			logger.info("This is Solaris");
 		} else if (isAndroid()) {
-			System.out.println("This is Android");
+			logger.info("This is Android");
 		} else if (isIOS()) {
-			System.out.println("This is iOS");
+			logger.info("This is iOS");
 		} 
 		else {
-			System.out.println("Your OS is not support!!");
+			logger.info("Your OS is not support!!");
 		}
 	}
 

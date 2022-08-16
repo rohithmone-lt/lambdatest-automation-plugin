@@ -45,7 +45,7 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 
 	private List<JSONObject> seleniumCapabilityRequest;
 	private List<JSONObject> appAutomationCapabilityRequest;
-	private String appUrl;
+	private String appId;
 	private String credentialsId;
 	private String username;
 	private Secret accessToken;
@@ -378,12 +378,12 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 		this.appAutomationCapabilityRequest = appAutomationCapabilityRequest;
 	}
 
-	public String getAppUrl() {
-		return appUrl;
+	public String getAppId() {
+		return appId;
 	}
 
-	public void setAppurl(String appUrl) {
-		this.appUrl = appUrl;
+	public void setAppid(String appId) {
+		this.appId = appId;
 	}
 
 	public String getUsername() {

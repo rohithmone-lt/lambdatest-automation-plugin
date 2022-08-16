@@ -30,7 +30,7 @@ import hudson.util.ListBoxModel;
 @Extension
 public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 
-	private final static Logger logger = Logger.getLogger(AppAutomationCapabilityService.class.getName());
+	private final static Logger logger = Logger.getLogger(MagicPlugDescriptor.class.getName());
 
 	@Override
 	public boolean isApplicable(AbstractProject<?, ?> item) {
@@ -48,7 +48,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	}
 
 	public FormValidation doPing() throws IOException, ServletException {
-		System.out.println("doPing");
+		logger.info("doPing");
 		if (new CapabilityService().ping()) {
 			return FormValidation.ok("Ping Successful");
 		} else {
@@ -77,7 +77,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_BROWSER_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(operatingSystem);
+		logger.info("operatingSystem : +" + operatingSystem);
 		Set<String> supportedBrowsers = CapabilityService.getBrowserNames(operatingSystem);
 		if (!CollectionUtils.isEmpty(supportedBrowsers)) {
 			supportedBrowsers.forEach(br -> {
@@ -90,10 +90,10 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	public ListBoxModel doFillBrowserVersionItems(@QueryParameter String operatingSystem,
 			@QueryParameter String browserName) {
 		ListBoxModel items = new ListBoxModel();
-		System.out.println(operatingSystem + "::" + browserName);
+		logger.info(operatingSystem + "::" + browserName);
 		if (!StringUtils.isBlank(operatingSystem) && StringUtils.isBlank(browserName)) {
 			browserName = "Chrome";
-			System.out.println("Chrome added");
+			logger.info("Chrome added");
 		} else if (StringUtils.isBlank(operatingSystem) || StringUtils.isBlank(browserName)) {
 			items.add(Constant.DEFAULT_BROWSER_VERSION_VALUE, Constant.EMPTY);
 			return items;
@@ -113,7 +113,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_RESOLUTION_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(operatingSystem);
+		logger.info("operatingSystem : " + operatingSystem);
 		List<String> supportedBrowsers = CapabilityService.getResolutions(operatingSystem);
 		if (!CollectionUtils.isEmpty(supportedBrowsers)) {
 			supportedBrowsers.forEach(br -> {
@@ -140,7 +140,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_BRAND_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(platformName);
+		logger.info("platformName : " + platformName);
 		Set<String> supportedBrands = AppAutomationCapabilityService.getBrandNames(platformName);
 		logger.info("Brand Names triggered : " + supportedBrands);
 		if (!CollectionUtils.isEmpty(supportedBrands)) {
@@ -153,16 +153,15 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	
 	public ListBoxModel doFillDeviceNameItems(@QueryParameter String platformName, @QueryParameter String brandName) {
 		ListBoxModel items = new ListBoxModel();
-		System.out.println(platformName + "::" + brandName);
+		logger.info(platformName + "::" + brandName);
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(brandName)) {
 			brandName = "Asus";
-			System.out.println("Asus added");
+			logger.info("Asus added");
 		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(brandName)) {
 			items.add(Constant.DEFAULT_DEVICE_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		System.out.println(platformName);
-		System.out.println(brandName);
+		logger.info("platformName : " + platformName + "\n" + "brandName : " + brandName);
 		Set<String> supportedDevices = AppAutomationCapabilityService.getDeviceNames(platformName, brandName);
 		logger.info("Device Names triggered : " + supportedDevices);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
@@ -176,10 +175,10 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	public ListBoxModel doFillDeviceVersionItems(@QueryParameter String platformName,
 			@QueryParameter String deviceName) {
 		ListBoxModel items = new ListBoxModel();
-		System.out.println(platformName + "::" + deviceName);
+		logger.info(platformName + "::" + deviceName);
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(deviceName)) {
 			deviceName = "Zenfone 6";
-			System.out.println("Zenfone 6 added");
+			logger.info("Zenfone 6 added");
 		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(deviceName)) {
 			items.add(Constant.DEFAULT_DEVICE_VERSION_VALUE, Constant.EMPTY);
 			return items;
@@ -194,7 +193,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		return items;
 	}
 
-	public ListBoxModel doFillAppUrl() {
+	public ListBoxModel doFillAppId() {
 		ListBoxModel items = new ListBoxModel();
 		items.add(Constant.DEFAULT_APP_URL, Constant.EMPTY);
 		return items;
@@ -202,9 +201,9 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	
 	public ListBoxModel doFillCredentialsIdItems(@QueryParameter String credentialsId) {
 		if (!StringUtils.isBlank(credentialsId)) {
-			System.out.println(credentialsId);
+			logger.info(credentialsId);
 		} else {
-			System.out.println("Not Found");
+			logger.info("Not Found");
 		}
 		return new ListBoxModel();
 	}
