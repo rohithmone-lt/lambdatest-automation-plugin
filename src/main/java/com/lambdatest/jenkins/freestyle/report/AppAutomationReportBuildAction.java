@@ -106,23 +106,23 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                     }
                 }
             } catch (JsonParseException e) {
-                logger.info("JsonParseException : " + e.toString());
+                logger.warning("JsonParseException : " + e.getMessage());
                 e.printStackTrace();
             } catch (JsonMappingException e) {
-                logger.info("JsonMappingException : " + e.toString());
+                logger.warning("JsonMappingException : " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
-                logger.info("IOException : " + e.toString());
+                logger.warning(msg);("IOException : " + e.getMessage());
                 e.printStackTrace();
             } catch (JSONException e) {
-                logger.info("JSONException : " + e.toString());
+                logger.warning("JSONException : " + e.getMessage());
                 e.printStackTrace();
             }
         } catch (MalformedURLException e) {
-            logger.info("MalformedURLException : " + e.toString());
+            logger.warning("MalformedURLException : " + e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
-            logger.info("IOException : " + e.toString());
+            logger.warning("IOException : " + e.getMessage());
             e.printStackTrace();
         }
     }
