@@ -48,7 +48,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	}
 
 	public FormValidation doPing() throws IOException, ServletException {
-		logger.info("doPing");
+		System.out.println("doPing");
 		if (new CapabilityService().ping()) {
 			return FormValidation.ok("Ping Successful");
 		} else {
@@ -77,7 +77,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_BROWSER_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
-		logger.info("operatingSystem : " + operatingSystem);
+		System.out.println(operatingSystem);
 		Set<String> supportedBrowsers = CapabilityService.getBrowserNames(operatingSystem);
 		if (!CollectionUtils.isEmpty(supportedBrowsers)) {
 			supportedBrowsers.forEach(br -> {
@@ -90,10 +90,10 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	public ListBoxModel doFillBrowserVersionItems(@QueryParameter String operatingSystem,
 			@QueryParameter String browserName) {
 		ListBoxModel items = new ListBoxModel();
-		logger.info(operatingSystem + "::" + browserName);
+		System.out.println(operatingSystem + "::" + browserName);
 		if (!StringUtils.isBlank(operatingSystem) && StringUtils.isBlank(browserName)) {
 			browserName = "Chrome";
-			logger.info("Chrome added");
+			System.out.println("Chrome added");
 		} else if (StringUtils.isBlank(operatingSystem) || StringUtils.isBlank(browserName)) {
 			items.add(Constant.DEFAULT_BROWSER_VERSION_VALUE, Constant.EMPTY);
 			return items;
@@ -113,7 +113,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_RESOLUTION_VALUE, Constant.EMPTY);
 			return items;
 		}
-		logger.info("operatingSystem : " + operatingSystem);
+		System.out.println(operatingSystem);
 		List<String> supportedBrowsers = CapabilityService.getResolutions(operatingSystem);
 		if (!CollectionUtils.isEmpty(supportedBrowsers)) {
 			supportedBrowsers.forEach(br -> {
@@ -154,7 +154,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		ListBoxModel items = new ListBoxModel();
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(brandName)) {
 			brandName = "Asus";
-			logger.info("Asus added");
+			System.out.println("Asus added");
 		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(brandName)) {
 			items.add(Constant.DEFAULT_DEVICE_NAME_VALUE, Constant.EMPTY);
 			return items;
@@ -174,7 +174,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 		ListBoxModel items = new ListBoxModel();
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(deviceName)) {
 			deviceName = "Zenfone 6";
-			logger.info("Zenfone 6 added");
+			System.out.println("Zenfone 6 added");
 		} else if (StringUtils.isBlank(platformName) || StringUtils.isBlank(deviceName)) {
 			items.add(Constant.DEFAULT_DEVICE_VERSION_VALUE, Constant.EMPTY);
 			return items;
@@ -197,9 +197,9 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	
 	public ListBoxModel doFillCredentialsIdItems(@QueryParameter String credentialsId) {
 		if (!StringUtils.isBlank(credentialsId)) {
-			logger.info(credentialsId);
+			System.out.println(credentialsId);
 		} else {
-			logger.info("Not Found");
+			System.out.println("Not Found");
 		}
 		return new ListBoxModel();
 	}

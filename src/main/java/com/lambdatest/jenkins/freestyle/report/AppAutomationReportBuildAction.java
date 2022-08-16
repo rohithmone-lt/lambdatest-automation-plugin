@@ -62,7 +62,7 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                     if (buildDetailNode.get("name").toString().replaceAll("\"", "").equals(buildName)) {
                         String build_id = buildDetailNode.get("build_id").toString();
 
-                        lambdaTestBuildDeviceUrl = Constant.APP_AUTOMATION_APP_URL + "/test?buildid=" + build_id;
+                        lambdaTestBuildDeviceUrl = "https://appautomation.lambdatest.com/test?buildid=" + build_id;
 
                         logger.info("lambdaTestBuildDeviceUrl : " + lambdaTestBuildDeviceUrl);
                         URL sessionUrl = new URL(Constant.AppAutomationReport.SESSION_INFO_URL + "?limit=100&build_id=" + build_id);
@@ -86,7 +86,7 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                         while (sessionDataIterator.hasNext()) {
                             JsonNode sessionDetailNode = sessionDataIterator.next();
                             logger.info("sessiondetailnode : " + sessionDataNode.toString());
-                            String testUrl = Constant.APP_AUTOMATION_APP_URL + "/test?testID=" + sessionDetailNode.get("test_id").toString().replaceAll("\"", "") + "&buildid=" + build_id;
+                            String testUrl = "https://appautomation.lambdatest.com/test?testID=" + sessionDetailNode.get("test_id").toString().replaceAll("\"", "") + "&buildid=" + build_id;
                             logger.info("testUrl : " + testUrl);
                             JSONObject resultJSON = new JSONObject();
                             resultJSON.put("url",testUrl);
@@ -106,23 +106,17 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                     }
                 }
             } catch (JsonParseException e) {
-                logger.warning("JsonParseException : " + e.toString());
                 e.printStackTrace();
             } catch (JsonMappingException e) {
-                logger.warning("JsonMappingException : " + e.toString());
                 e.printStackTrace();
             } catch (IOException e) {
-                logger.warning("IOException : " + e.toString());
                 e.printStackTrace();
             } catch (JSONException e) {
-                logger.warning("JSONException : " + e.toString());
                 e.printStackTrace();
             }
         } catch (MalformedURLException e) {
-            logger.warning("MalformedURLException : " + e.toString());
             e.printStackTrace();
         } catch (IOException e) {
-            logger.warning("IOException : " + e.toString());
             e.printStackTrace();
         }
     }
