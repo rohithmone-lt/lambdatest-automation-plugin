@@ -23,7 +23,7 @@ import com.lambdatest.jenkins.freestyle.api.operatingsystem.OsList;
 
 public class AppAutomationCapabilityService {
 
-    private final static Logger logger = Logger.getLogger(CapabilityService.class.getName());
+    private final static Logger logger = Logger.getLogger(AppAutomationCapabilityService.class.getName());
 
 	public static Map<String, String> supportedPlatforms = new LinkedHashMap<>();
 	public static Set<String> supportedBrands;
@@ -119,7 +119,7 @@ public class AppAutomationCapabilityService {
 				supportedDevices.add(dn.getDeviceName());
 			});
 		} else {
-			System.out.println(adk + " not found");
+			logger.info(adk + " not found");
 		}
 		return supportedDevices;
 	}
@@ -133,7 +133,7 @@ public class AppAutomationCapabilityService {
 				supportedDeviceVersions.add(dv.getVersion());
 			});
 		} else {
-			System.out.println(avk + " not found");
+			logger.info(avk + " not found");
 		}
 		return supportedDeviceVersions;
 	}

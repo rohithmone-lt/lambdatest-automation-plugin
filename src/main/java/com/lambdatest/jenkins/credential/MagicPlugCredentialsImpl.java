@@ -37,10 +37,8 @@ public class MagicPlugCredentialsImpl extends BaseStandardCredentials implements
 			String accessToken) throws Exception {
 		super(scope, id, description);
 		try {
-			System.out.println("MagicPlugCredentialsImpl");
 			this.username = username;
 			this.accessToken = Secret.fromString(accessToken);
-			System.out.println("Here We can Verify Credentials Also before Adding");
 			if (!CapabilityService.isValidUser(username, accessToken)) {
 				throw new Exception("Invalid username and access Token");
 			}
@@ -82,7 +80,6 @@ public class MagicPlugCredentialsImpl extends BaseStandardCredentials implements
 
 		public FormValidation doVerifyCredentials(@QueryParameter("username") final String username,
 				@QueryParameter("accessToken") final String accessToken) throws IOException, ServletException {
-			System.out.println(username + ":" + accessToken);
 			if (StringUtils.isBlank(username) || StringUtils.isBlank(accessToken)) {
 				return FormValidation.error("Please enter valid username and authKey");
 			}
