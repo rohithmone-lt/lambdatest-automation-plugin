@@ -74,8 +74,6 @@ public class AppAutomationCapabilityService {
             String jsonResponseOs = jsonObj.getJSONArray(platformName).toString();
 			List<Devices> devices = objectMapper.readValue(jsonResponseOs, new TypeReference<List<Devices>>() {});
 			parseSupportedBrandsAndDevices(devices, platformName);
-			// logger.info("allDeviceNames after parsing : " + allDeviceNames.size());
-			// logger.info("allDeviceVersions after parsing : " + allDeviceNames.size());
 		} catch (Exception e) {
 			logger.warning(e.getMessage());
 		}
@@ -125,8 +123,6 @@ public class AppAutomationCapabilityService {
 	}
 
     public static Set<String> getDeviceVersions(String platformName, String deviceName) {
-		// logger.info("getDeviceVersions Triggered");
-		// logger.info("allDeviceVersions : " + allDeviceVersions.size());
 		supportedDeviceVersions = new LinkedHashSet<String>();
 		AppAutomationVersionKey avk = new AppAutomationVersionKey(platformName, deviceName);
 		if (allDeviceVersions.containsKey(avk)) {
