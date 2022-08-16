@@ -125,6 +125,8 @@ public class AppAutomationCapabilityService {
 	}
 
     public static Set<String> getDeviceVersions(String platformName, String deviceName) {
+		// logger.info("getDeviceVersions Triggered");
+		// logger.info("allDeviceVersions : " + allDeviceVersions.size());
 		supportedDeviceVersions = new LinkedHashSet<String>();
 		AppAutomationVersionKey avk = new AppAutomationVersionKey(platformName, deviceName);
 		if (allDeviceVersions.containsKey(avk)) {
@@ -157,7 +159,6 @@ public class AppAutomationCapabilityService {
 		System.out.println(getPlatformNames());
 		System.out.println(getBrandNames("android"));
 		System.out.println(getDeviceNames("android", "Asus"));
-		System.out.println(getDeviceVersions("android", "Zenfone 6"));
 		System.out.println(allDeviceVersions);
 	}
     

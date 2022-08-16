@@ -140,6 +140,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_BRAND_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
+		System.out.println(platformName);
 		Set<String> supportedBrands = AppAutomationCapabilityService.getBrandNames(platformName);
 		logger.info("Brand Names triggered : " + supportedBrands);
 		if (!CollectionUtils.isEmpty(supportedBrands)) {
@@ -152,6 +153,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	
 	public ListBoxModel doFillDeviceNameItems(@QueryParameter String platformName, @QueryParameter String brandName) {
 		ListBoxModel items = new ListBoxModel();
+		System.out.println(platformName + "::" + brandName);
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(brandName)) {
 			brandName = "Asus";
 			System.out.println("Asus added");
@@ -159,6 +161,8 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 			items.add(Constant.DEFAULT_DEVICE_NAME_VALUE, Constant.EMPTY);
 			return items;
 		}
+		System.out.println(platformName);
+		System.out.println(brandName);
 		Set<String> supportedDevices = AppAutomationCapabilityService.getDeviceNames(platformName, brandName);
 		logger.info("Device Names triggered : " + supportedDevices);
 		if (!CollectionUtils.isEmpty(supportedDevices)) {
@@ -172,6 +176,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 	public ListBoxModel doFillDeviceVersionItems(@QueryParameter String platformName,
 			@QueryParameter String deviceName) {
 		ListBoxModel items = new ListBoxModel();
+		System.out.println(platformName + "::" + deviceName);
 		if (!StringUtils.isBlank(platformName) && StringUtils.isBlank(deviceName)) {
 			deviceName = "Zenfone 6";
 			System.out.println("Zenfone 6 added");
