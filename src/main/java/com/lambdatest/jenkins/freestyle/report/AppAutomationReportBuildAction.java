@@ -112,7 +112,7 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                 logger.warning("JsonMappingException : " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
-                logger.warning(msg);("IOException : " + e.getMessage());
+                logger.warning("IOException : " + e.getMessage());
                 e.printStackTrace();
             } catch (JSONException e) {
                 logger.warning("JSONException : " + e.getMessage());

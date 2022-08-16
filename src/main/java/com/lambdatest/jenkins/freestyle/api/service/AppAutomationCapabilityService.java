@@ -155,6 +155,7 @@ public class AppAutomationCapabilityService {
 		System.out.println(getPlatformNames());
 		System.out.println(getBrandNames("android"));
 		System.out.println(getDeviceNames("android", "Asus"));
+		System.out.println(getDeviceVersions("android", "Zenfone 6"));
 		System.out.println(allDeviceVersions);
 	}
     
