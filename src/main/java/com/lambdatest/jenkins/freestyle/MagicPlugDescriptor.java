@@ -30,7 +30,7 @@ import hudson.util.ListBoxModel;
 @Extension
 public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 
-	private final static Logger logger = Logger.getLogger(MagicPlugDescriptor.class.getName());
+	private final static Logger logger = Logger.getLogger(AppAutomationCapabilityService.class.getName());
 
 	@Override
 	public boolean isApplicable(AbstractProject<?, ?> item) {
