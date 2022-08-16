@@ -228,7 +228,7 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 				env.put(Constant.LT_BRAND_NAME, appAutomationCapability.getString(Constant.BRAND_NAME));
 				env.put(Constant.LT_DEVICE_NAME, appAutomationCapability.getString(Constant.DEVICE_NAME));
 				env.put(Constant.LT_DEVICE_VERSION, appAutomationCapability.getString(Constant.DEVICE_VERSION));
-				env.put(Constant.LT_APP_URL, appAutomationCapability.getString(Constant.APP_ID));
+				env.put(Constant.LT_APP_ID, appAutomationCapability.getString(Constant.APP_ID));
 			}
 			env.put(Constant.LT_BROWSERS, createBrowserJSON(seleniumCapabilityRequest));
 			env.put(Constant.LT_BRANDS, createBrandJSON(appAutomationCapabilityRequest));

@@ -195,7 +195,7 @@ public class MagicPlugDescriptor extends BuildWrapperDescriptor {
 
 	public ListBoxModel doFillAppId() {
 		ListBoxModel items = new ListBoxModel();
-		items.add(Constant.DEFAULT_APP_URL, Constant.EMPTY);
+		items.add(Constant.DEFAULT_APP_ID, Constant.EMPTY);
 		return items;
 	}
 	

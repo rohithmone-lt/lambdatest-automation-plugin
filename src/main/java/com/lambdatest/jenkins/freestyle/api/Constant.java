@@ -27,7 +27,7 @@ public interface Constant {
 	String LT_BRAND_NAME = "LT_BRAND_NAME";
 	String LT_DEVICE_NAME = "LT_DEVICE_NAME";
 	String LT_DEVICE_VERSION = "LT_DEVICE_VERSION";
-	String LT_APP_URL = "LT_APP_URL";
+	String LT_APP_ID = "LT_APP_ID";
 
 	String OPERATING_SYSTEM = "operatingSystem";
 	String BROWSER_NAME = "browserName";
@@ -77,7 +77,7 @@ public interface Constant {
 	String DEFAULT_BRAND_NAME_VALUE = "Select Brand Name";
 	String DEFAULT_DEVICE_NAME_VALUE = "Select Device Name";
 	String DEFAULT_DEVICE_VERSION_VALUE = "Select Device Version";
-	String DEFAULT_APP_URL = "Enter App Url";
+	String DEFAULT_APP_ID = "Enter App ID";
 
 	String STAGE = "stage";
 	String DEV = "dev";
