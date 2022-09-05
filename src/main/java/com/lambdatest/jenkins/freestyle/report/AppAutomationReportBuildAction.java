@@ -90,11 +90,11 @@ public class AppAutomationReportBuildAction extends AbstractAppAutomationReportB
                             logger.info("testUrl : " + testUrl);
                             JSONObject resultJSON = new JSONObject();
                             resultJSON.put("url",testUrl);
-                            resultJSON.put("status",sessionDetailNode.get("status_ind").toString().replaceAll("\"", ""));
                             resultJSON.put("deviceVersion",sessionDetailNode.get("version").toString().replaceAll("\"", ""));
                             resultJSON.put("OS",sessionDetailNode.get("platform").toString().replaceAll("\"", ""));
+                            resultJSON.put("testId",sessionDetailNode.get("test_id").toString().replaceAll("\"", ""));
+                            resultJSON.put("buildId",sessionDetailNode.get("build_id").toString().replaceAll("\"", ""));
                             resultJSON.put("name",sessionDetailNode.get("name").toString().replaceAll("\"", ""));
-                            resultJSON.put("testDuration",sessionDetailNode.get("duration").toString().replaceAll("\"", ""));
                             resultJSON.put("createdAtReadable",sessionDetailNode.get("create_timestamp").toString().replaceAll("\"", ""));
                             array.put(resultJSON);
                         }
