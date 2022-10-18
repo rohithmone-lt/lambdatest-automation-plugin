@@ -325,6 +325,11 @@ public class MagicPlugBuildWrapper extends BuildWrapper implements Serializable 
 					return 10;
 				}
 				long tunnelProcessId=getPidOfProcess(tunnelProcess);
+				logger.info("tunnel is active, with tunnelProcessId: " + tunnelProcessId);
+				if(tunnelProcessId == -1){
+					logger.info("Unable to find ProcessId: " + tunnelProcessId);
+					return -1;
+				}
 				stopTunnelProcessUsingPID(tunnelProcessId);
 				Thread.sleep(2000);
 				return 10;
